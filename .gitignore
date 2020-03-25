@@ -29,3 +29,5 @@ node_modules
 dump.rdb
 
 uploadFiles
+.idea/workspace.xml
+
