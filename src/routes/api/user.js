@@ -25,7 +25,7 @@ const verify = util.promisify(jwt.verify)
 router.post('/list', async (ctx, next) => {
   const {limit, page} = ctx.request.body
   const list = await getList(limit, page)
-  ctx.body = new SuccessModel({hh: 11})
+  ctx.body = new SuccessModel({data: list})
 })
 
 // router.get('/getUserData/:uid', async (ctx, next) => {
