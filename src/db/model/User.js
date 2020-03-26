@@ -20,7 +20,7 @@ const User = seq.define('user', {
   gender: {
     type: INTEGER,
     allowNull: false,
-    comment: '用户性别',
+    comment: '用户性别', // 0 未知 1男 2女
   },
   avatar: {
     type: STRING,
@@ -45,18 +45,22 @@ const User = seq.define('user', {
   },
   red_line_count: {
     type: INTEGER,
+    defaultValue: 0,
     comment: '用户红线数量',
   },
   status: {
     type: INTEGER,
+    defaultValue: 1,
     comment: '用户状态',
   },
   like_count: {
     type: INTEGER,
+    defaultValue: 0,
     comment: '喜欢的数量',
   },
   liked_count: {
     type: INTEGER,
+    defaultValue: 0,
     comment: '被喜欢的数量',
   },
   liking_id: {

@@ -11,6 +11,10 @@ const UserData = seq.define('user_data', {
     type: INTEGER,
     comment: '用户id',
   },
+  city: {
+    type: STRING,
+    comment: '城市',
+  },
   nickname: {
     type: STRING,
     comment: '用户昵称',

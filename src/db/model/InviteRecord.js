@@ -12,7 +12,7 @@ const InviteRecord = seq.define('invite_record', {
     type: INTEGER,
     comment: '用户id',
   },
-  invide_id: {
+  invite_id: {
     type: INTEGER,
     comment: '邀请人id',
   },
