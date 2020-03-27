@@ -60,7 +60,14 @@ const getUserInfoByUid = async function (uid) {
   return user
 }
 
+const getCenterData = async function(uid) {
+  let user = await getUserInfoByUidFromTable(uid)
+  user = user.dataValues
+  return user
+}
+
 module.exports = {
   getUserinfo,
+  getCenterData,
   getUserInfoByUid
 }

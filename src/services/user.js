@@ -57,6 +57,11 @@ const getUserInfoByUidFromTable = async function(uid) {
   return res
 }
 
+const updateUser = async function(data, options) {
+  const res = await User.update(data, options)
+  return res
+}
+
 
 const createUser = async function(data, inviteId, city = 'NING_BO') {
   // 添加新用户
@@ -100,5 +105,6 @@ module.exports = {
   getUserInfoByUnionid,
   getUserInfoByUidFromTable,
   createUser,
+  updateUser,
   addRedLine
 }

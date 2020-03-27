@@ -3,7 +3,14 @@
  * @author zhaojianbo
  */
 
-const validate = require('./_validate')
+const validate = require('./index')
+
+// 昵称校验规则
+const NICKNAME_SCHEMA = {
+  type: 'string',
+  maxLength: 8,
+  minLength: 1
+}
 
 // 校验规则
 const SCHEMA = {
@@ -50,8 +57,10 @@ const SCHEMA = {
  * 校验用户数据格式
  * @param {Object} data 用户数据
  */
-function userValidate(data = {}) {
-    return validate(SCHEMA, data)
+function nicknameValidate(nickname) {
+    return validate(NICKNAME_SCHEMA, nickname)
 }
 
-module.exports = userValidate
+module.exports = {
+  nicknameValidate
+}

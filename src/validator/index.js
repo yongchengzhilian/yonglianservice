@@ -14,7 +14,7 @@ const ajv = new Ajv({
  * @param {Object} data 待校验的数据
  */
 function validate(schema, data = {}) {
-  const valid = ajv.validate(schema, data)
+  const valid = ajv.validate(schema, data.nickname)
   if (!valid) {
     return ajv.errors[0]
   }
