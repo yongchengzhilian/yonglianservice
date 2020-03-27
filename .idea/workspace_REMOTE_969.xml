@@ -222,11 +222,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-<<<<<<< HEAD
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/cache" />
-=======
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
->>>>>>> d7a9ea0d8b255c43be5967ecf36151bd569fc09f
     <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/jest" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="D:\Program Files\JetBrains\WebStorm 2019.3.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
@@ -237,11 +233,11 @@
       <recent name="D:\idol\yonglianService\src" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\idol\yonglianService\src\cache" />
-      <recent name="D:\idol\yonglianService\src\middlewares" />
-      <recent name="D:\idol\yonglianService\src\validator" />
       <recent name="D:\idol\yonglianService\src\utils\wx" />
       <recent name="D:\idol\yonglianService\src\utils" />
+      <recent name="D:\idol\yonglianService\src\model" />
+      <recent name="D:\idol\yonglianService\src\config" />
+      <recent name="D:\idol\yonglianService\src\db" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -284,13 +280,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1585113230516</updated>
-<<<<<<< HEAD
-      <workItem from="1585113231801" duration="49734000" />
-=======
       <workItem from="1585113231801" duration="45665000" />
       <workItem from="1585229369918" duration="34000" />
       <workItem from="1585229424375" duration="3134000" />
->>>>>>> d7a9ea0d8b255c43be5967ecf36151bd569fc09f
     </task>
     <servers />
   </component>
@@ -344,14 +336,14 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="1664" height="242" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1585123099717" />
-    <state x="534" y="193" width="639" height="534" key="find.popup" timestamp="1585276364460">
+    <state x="534" y="193" width="639" height="534" key="find.popup" timestamp="1585120156649">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="534" y="193" width="639" height="534" key="find.popup/0.0.1707.920@0.0.1707.920" timestamp="1585276364460" />
-    <state x="516" y="196" width="672" height="678" key="search.everywhere.popup" timestamp="1585275963951">
+    <state x="534" y="193" width="639" height="534" key="find.popup/0.0.1707.920@0.0.1707.920" timestamp="1585120156649" />
+    <state x="516" y="196" width="672" height="678" key="search.everywhere.popup" timestamp="1585120887038">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="516" y="196" width="672" height="678" key="search.everywhere.popup/0.0.1707.920@0.0.1707.920" timestamp="1585275963951" />
+    <state x="516" y="196" width="672" height="678" key="search.everywhere.popup/0.0.1707.920@0.0.1707.920" timestamp="1585120887038" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/yonglianService$Rerun_Failed_Tests.info" NAME="Rerun Failed Tests Coverage Results" MODIFIED="1585122985400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="JestJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

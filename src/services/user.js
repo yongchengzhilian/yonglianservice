@@ -59,41 +59,39 @@ const getUserInfoByUidFromTable = async function(uid) {
 
 
 const createUser = async function(data, inviteId, city = 'NING_BO') {
-  let res = null
-  await seq.transaction(async t => {
-    // 添加新用户
-    res = await User.create({
-      nickname: data.nickName,
-      avatar: data.avatarUrl,
-      gender: data.gender,
-      open_id: data.openId,
-      union_id: data.unionId,
-      appid: APP_ID[city],
-    }, {transaction: t})
-    if (inviteId) {
-      console.log(inviteId)
-      // 如果有邀请人 添加邀请记录
-      await InviteRecord.create({
-        uid: res.id,
-        invite_id: inviteId,
-        avatar: res.avatar,
-        gender: res.gender,
-        isregister: false
-      }, {transaction: t})
-      // 查询邀请记录
-      const inviteList = await InviteRecord.findAndCountAll({
-        where: {
-          invite_id: inviteId
-        }
-      })
-      console.log(inviteList)
-      // 如果邀请每5个人 送邀请人一条红线
-      if (inviteList.count !== 0 && inviteList.count % 5 === 0) {
-        await addRedLine(inviteId)
-        await addRedLineRecord(RED_LINE_RECORD_TYPE.INVITE, '邀请赠送', inviteId)
-      }
-    }
+  // 添加新用户
+  let res = await User.create({
+    nickname: data.nickName,
+    avatar: data.avatarUrl,
+    gender: data.gender,
+    open_id: data.openId,
+    union_id: data.unionId,
+    city,
+    appid: APP_ID[city],
   })
+  if (inviteId) {
+    // 如果有邀请人 添加邀请记录
+    await InviteRecord.create({
+      uid: res.id,
+      invite_id: inviteId,
+      avatar: res.avatar,
+      gender: res.gender,
+      isregister: false
+    })
+
+    // 查询邀请记录
+    const inviteList = await InviteRecord.findAndCountAll({
+      where: {
+        invite_id: inviteId
+      }
+    })
+
+    // 如果邀请每5个人 送邀请人一条红线
+    if (inviteList.count !== 0 && inviteList.count % 5 === 0) {
+      await addRedLine(inviteId)
+      await addRedLineRecord(RED_LINE_RECORD_TYPE.INVITE, '邀请赠送', inviteId)
+    }
+  }
 
 
   return res

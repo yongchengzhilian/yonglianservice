@@ -8,8 +8,8 @@ const {
 } = require('../services/userData')
 
 const getList = async function(limit, page, city = 'NING_BO') {
-  const list = await getUserList(limit, page, city)
-  console.log(111, list)
+  let list = await getUserList(limit, page, city)
+  return list.map(item => item.dataValues)
 }
 
 

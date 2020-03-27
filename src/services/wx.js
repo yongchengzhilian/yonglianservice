@@ -5,10 +5,12 @@
 
 const axios = require('axios')
 const {getLoginUrl} = require('../config/wx')
-const HttpException = require('../middlewares/exception/http-exception')
 
 const wxLogin = async function (code) {
   const { data } = await axios.get(getLoginUrl(code))
+  if (data.errcode) {
+    throw new Error(JSON.stringify(data))
+  }
   return data
 }
 

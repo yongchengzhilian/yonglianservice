@@ -20,8 +20,18 @@ router.get('/getUserInfoByUid/:uid', async (ctx, next) => {
 })
 
 router.post('/getUserinfo', async (ctx, next) => {
-  const { iv, encryptedData, code, inviteId } = ctx.request.body
-  const userinfo = await getUserinfo(iv, encryptedData, code, inviteId)
+  const {
+    iv,
+    encryptedData,
+    code,
+    inviteId
+  } = ctx.request.body
+  const userinfo = await getUserinfo(
+    iv,
+    encryptedData,
+    code,
+    inviteId
+  )
   ctx.body = new SuccessModel(userinfo)
 })
 

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c8e412f4-9aa8-4b7c-b28b-49dc905d8da3" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="382" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ZbgVTloXIQA0RgQ4pXDlyfBUAw" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/utils/wx" />
+    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/jest" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="D:\Program Files\JetBrains\WebStorm 2019.3.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\idol\yonglianService\src\middlewares\exception" />
+      <recent name="D:\idol\yonglianService\src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\idol\yonglianService\src\utils\wx" />
+      <recent name="D:\idol\yonglianService\src\utils" />
+      <recent name="D:\idol\yonglianService\src\model" />
+      <recent name="D:\idol\yonglianService\src\config" />
+      <recent name="D:\idol\yonglianService\src\db" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="修改用户成功" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/test/user/createUser.test.js" />
+      <test-names>
+        <test-name value="修改用户成功" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.修改用户成功" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c8e412f4-9aa8-4b7c-b28b-49dc905d8da3" name="Default Changelist" comment="" />
+      <created>1585113230516</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585113230516</updated>
+      <workItem from="1585113231801" duration="45665000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1664" height="242" key="GridCell.Tab.0.bottom" timestamp="1585123099718">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="1664" height="242" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1585123099718" />
+    <state width="1664" height="242" key="GridCell.Tab.0.center" timestamp="1585123099717">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="1664" height="242" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1585123099717" />
+    <state width="1664" height="242" key="GridCell.Tab.0.left" timestamp="1585123099717">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="1664" height="242" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1585123099717" />
+    <state width="1664" height="242" key="GridCell.Tab.0.right" timestamp="1585123099717">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="1664" height="242" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1585123099717" />
+    <state x="534" y="193" width="639" height="534" key="find.popup" timestamp="1585120156649">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="534" y="193" width="639" height="534" key="find.popup/0.0.1707.920@0.0.1707.920" timestamp="1585120156649" />
+    <state x="516" y="196" width="672" height="678" key="search.everywhere.popup" timestamp="1585120887038">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="516" y="196" width="672" height="678" key="search.everywhere.popup/0.0.1707.920@0.0.1707.920" timestamp="1585120887038" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/yonglianService$Rerun_Failed_Tests.info" NAME="Rerun Failed Tests Coverage Results" MODIFIED="1585122985400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="JestJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/yonglianService$.info" NAME="修改用户成功 Coverage Results" MODIFIED="1585123010791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="JestJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
