@@ -11,6 +11,10 @@ const seq = require('../db/seq')
 const {RED_LINE_RECORD_TYPE} = require('../enum/RedLine')
 const {addRedLineRecord} = require('./redLine')
 
+/**
+ * @description 獲取用戶信息
+ * @param {params} 搜索條件
+ */
 const getUserinfo = async function(params) {
   const res = await User.findOne({
     attributes: [
