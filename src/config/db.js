@@ -13,8 +13,8 @@ let REDIS_CONF = {
 let MYSQL_CONF = {
     host: 'localhost',
     user: 'root',
-    // password: 'root',
-    password: '123456',
+    password: 'root',
+    // password: '123456',
     port: '3306',
     database: 'aidou_test'
 }
