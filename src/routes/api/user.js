@@ -5,21 +5,18 @@
 
 
 const router = require('koa-router')()
-const util = require('util')
-const jwt = require('jsonwebtoken')
 const {
-  addRedLine,
-} = require('../../services/user')
-const {
-  getList
+  getList,
+  updateAvatar,
+  updateNickname
 } = require('../../controller/user')
-
-const {SECRET} = require('../../config/jwt')
+const {genValidator} = require('../../middlewares/validator')
+const {nicknameValidate} = require('../../validator/user')
 const {SuccessModel} = require('../../model/ResModel')
+const parseToken = require('../../utils/parseToken')
 
 router.prefix('/user')
 
-const verify = util.promisify(jwt.verify)
 
 // 用户列表
 router.post('/list', async (ctx, next) => {
@@ -28,24 +25,20 @@ router.post('/list', async (ctx, next) => {
   ctx.body = new SuccessModel({data: list})
 })
 
-// router.get('/getUserData/:uid', async (ctx, next) => {
-//   const token = ctx.header.authorization
-//   try {
-//     const payload = await verify(token.split(' ')[1], SECRET)
-//     ctx.body = {
-//       code: 1,
-//       data: payload
-//     }
-//   }catch (e) {
-//     ctx.body = {
-//       code: 1,
-//       data: 'fail'
-//     }
-//   }
-// })
-//
-// router.get('/add/redLine', async (ctx, next) => {
-//   addRedLine()
-// })
+router.post('/updateNickname', genValidator(nicknameValidate), async (ctx, next) => {
+  const {nickname} = ctx.request.body
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  await updateNickname(nickname, id)
+  ctx.body = new SuccessModel({data: '修改成功'})
+})
+
+router.post('/updateAvatar', async (ctx, next) => {
+  const {avatar} = ctx.request.body
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  await updateAvatar(avatar, id)
+  ctx.body = new SuccessModel({data: '修改成功'})
+})
 
 module.exports = router

@@ -11,6 +11,10 @@ const seq = require('../db/seq')
 const {RED_LINE_RECORD_TYPE} = require('../enum/RedLine')
 const {addRedLineRecord} = require('./redLine')
 
+/**
+ * @description 獲取用戶信息
+ * @param {params} 搜索條件
+ */
 const getUserinfo = async function(params) {
   const res = await User.findOne({
     attributes: [
@@ -50,6 +54,11 @@ const getUserInfoByUidFromTable = async function(uid) {
   const res = await getUserinfo({
     id: uid
   })
+  return res
+}
+
+const updateUser = async function(data, options) {
+  const res = await User.update(data, options)
   return res
 }
 
@@ -96,5 +105,6 @@ module.exports = {
   getUserInfoByUnionid,
   getUserInfoByUidFromTable,
   createUser,
+  updateUser,
   addRedLine
 }

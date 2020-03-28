@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c8e412f4-9aa8-4b7c-b28b-49dc905d8da3" name="Default Changelist" comment="" />
+    <list default="true" id="c8e412f4-9aa8-4b7c-b28b-49dc905d8da3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/api/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/api/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/api/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/api/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/wx.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/wx.js" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -142,11 +151,11 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1" />
-    <option name="y" value="24" />
-    <option name="width" value="1392" />
-    <option name="height" value="877" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-1897" />
+    <option name="y" value="28" />
+    <option name="width" value="1897" />
+    <option name="height" value="1049" />
   </component>
   <component name="ProjectId" id="1ZbgVTloXIQA0RgQ4pXDlyfBUAw" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -280,22 +289,19 @@
 =======
       <workItem from="1585113231801" duration="45665000" />
       <workItem from="1585229369918" duration="34000" />
-<<<<<<< HEAD
-      <workItem from="1585229424375" duration="3761000" />
-=======
       <workItem from="1585229424375" duration="3134000" />
 >>>>>>> d7a9ea0d8b255c43be5967ecf36151bd569fc09f
->>>>>>> b7f906daa7ce020166d00152f28798b22c1ab572
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3795000" />
+    <option name="totallyTimeSpent" value="3168000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1392" height="877" extended-state="6" />
+    <frame x="-1897" y="28" width="1897" height="1049" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.34208608" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
@@ -304,7 +310,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.52820516" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.4327731" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
