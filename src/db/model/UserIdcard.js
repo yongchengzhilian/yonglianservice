@@ -15,6 +15,10 @@ const UserIdcard = seq.define('user_idcard', {
     type: STRING,
     comment: '身份证号',
   },
+  name: {
+    type: STRING,
+    comment: '姓名',
+  },
   idcard_front: {
     type: STRING,
     comment: '身份证正面图片地址',

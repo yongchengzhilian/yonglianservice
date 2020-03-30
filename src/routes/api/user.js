@@ -8,6 +8,8 @@ const router = require('koa-router')()
 const {
   getList,
   updateAvatar,
+  idcardIsExist,
+  saveIdcardInfo,
   updateNickname
 } = require('../../controller/user')
 const {genValidator} = require('../../middlewares/validator')
@@ -40,5 +42,31 @@ router.post('/updateAvatar', async (ctx, next) => {
   await updateAvatar(avatar, id)
   ctx.body = new SuccessModel({data: '修改成功'})
 })
+
+router.post('/saveIdcardInfo', async (ctx, next) => {
+  const {
+    idcard_num,
+    idcard_front,
+    idcard_back,
+    name
+  } = ctx.request.body
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  await saveIdcardInfo({
+    id,
+    idcard_num,
+    idcard_front,
+    idcard_back,
+    name
+  })
+  ctx.body = new SuccessModel({data: '上传成功'})
+})
+
+router.post('/idcardIsExist', async (ctx, next) => {
+  const {idcardNum} = ctx.request.body
+  await idcardIsExist(idcardNum)
+  ctx.body = new SuccessModel({data: '上传成功'})
+})
+
 
 module.exports = router

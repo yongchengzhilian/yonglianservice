@@ -19,6 +19,17 @@ const getUserList = async function(limit, page, city = 'NING_BO') {
   return res
 }
 
+const updateUserData = async function(data, options) {
+  const res = await UserData.update(data, options)
+  return res
+}
+
+const createUserData = async function(data) {
+  await UserData.create(data)
+}
+
 module.exports = {
   getUserList,
+  updateUserData,
+  createUserData,
 }

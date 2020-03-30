@@ -7,11 +7,13 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const { initRouters } = require('./src/utils/initRouters')
 const catchError = require('./src/middlewares/exception/index')
+const HttpException = require('./src/middlewares/exception/http-exception')
 const jwtKoa = require('koa-jwt')
 const {SECRET} = require('./src/config/jwt')
 
 // error handler
 onerror(app)
+global.HttpException  = HttpException
 
 // middlewares
 app.use(jwtKoa({
