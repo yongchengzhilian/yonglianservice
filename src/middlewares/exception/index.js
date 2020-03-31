@@ -9,6 +9,7 @@ const catchError = async (ctx, next) => {
   try {
     await next()
   } catch (e) {
+    console.log('error', e)
     if (e instanceof HttpException) {
       ctx.body = new ErrorModel({
         errno: e.errcode,
@@ -17,7 +18,7 @@ const catchError = async (ctx, next) => {
     } else {
       ctx.body = new ErrorModel({
         errno: -1,
-        message: '出现了一个未知错误'
+        message: JSON.stringify(e)
       })
     }
   }

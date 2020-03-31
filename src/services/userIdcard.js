@@ -12,9 +12,9 @@ const saveIdcard = async function (data) {
 
 const getIdcard = async function(options) {
   const idcard = await UserIdcard.findOne({
+    attributes: ['idcard_num'],
     where: options
   })
-  console.log(idcard)
   return idcard
 }
 

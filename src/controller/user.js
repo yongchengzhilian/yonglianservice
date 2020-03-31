@@ -5,7 +5,8 @@
 
 const {
   getUserList,
-  createUserData
+  createUserData,
+  updateUserData
 } = require('../services/userData')
 const {
   updateUser
@@ -28,10 +29,12 @@ const getList = async function(limit, page, city = 'NING_BO') {
 
 const updateNickname = async function(nickname, id) {
   await updateUser({nickname}, {where: {id}})
+  await updateUserData({nickname}, {where: {uid: id}})
 }
 
 const updateAvatar = async function(avatar, id) {
   await updateUser({avatar}, {where: {id}})
+  await updateUserData({avatar}, {where: {uid: id}})
 }
 
 const saveIdcardInfo = async function(data) {
@@ -40,9 +43,10 @@ const saveIdcardInfo = async function(data) {
     idcard_front,
     idcard_back,
     id,
+    nickname,
+    avatar,
     name
   } = data
-  console.log(222, data)
   await saveIdcard({
     idcard_num,
     idcard_front,
@@ -58,6 +62,8 @@ const saveIdcardInfo = async function(data) {
   }, {where: {id}})
   await createUserData({
     gender,
+    nickname,
+    avatar,
     city: 'NING_BO',
     native_place: userInfo.native_place,
     birthday: userInfo.birthday,
@@ -73,10 +79,41 @@ const idcardIsExist = async function(idcardNum) {
   return
 }
 
+const saveUserData = async function(data) {
+  let status = USER_STATUS.DATA_AUTHING_1
+  const wechat = data.wechat
+  if (data.status !== USER_STATUS.NEED_USER_DATA) {
+    status = USER_STATUS.DATA_AUTHING_2
+  }
+  const userinfo = {
+    status,
+    income: data.income,
+    education: data.education,
+    photos: data.photo,
+    house_car: data.house_car,
+    marriage: data.marriage,
+    current_place: data.currentPlace,
+    height: data.height,
+    weight: data.weight,
+    about_me: data.content,
+    about_ta: data.favoriteTa,
+    hobby: data.interest,
+    work: data.work
+  }
+  await updateUser({status, wechat}, {where: {id: data.id}})
+  await updateUserData(userinfo, {where: {uid: data.id}})
+}
+
+const getSelfInfo = async function(data) {
+
+}
+
 module.exports = {
   getList,
   updateAvatar,
   idcardIsExist,
+  getSelfInfo,
   saveIdcardInfo,
+  saveUserData,
   updateNickname
 }
