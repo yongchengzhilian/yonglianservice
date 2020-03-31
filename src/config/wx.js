@@ -7,7 +7,7 @@ const APP_ID = {
   NING_BO: 'wx938259363d663a46'
 }
 const APP_SECRET = {
-  NING_BO: 'a30097c2e2885135deaa4cfc13246bd2'
+  NING_BO: '593dfdbc4d9f2e1b14f61fa3f3a69fe3'
 }
 
 const getLoginUrl = function(code, city = 'NING_BO') {
