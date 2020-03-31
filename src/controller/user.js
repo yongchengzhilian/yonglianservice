@@ -82,6 +82,7 @@ const idcardIsExist = async function(idcardNum) {
 const saveUserData = async function(data) {
   let status = USER_STATUS.DATA_AUTHING_1
   const wechat = data.wechat
+  const phone = data.phone
   if (data.status !== USER_STATUS.NEED_USER_DATA) {
     status = USER_STATUS.DATA_AUTHING_2
   }
@@ -100,7 +101,7 @@ const saveUserData = async function(data) {
     hobby: data.interest,
     work: data.work
   }
-  await updateUser({status, wechat}, {where: {id: data.id}})
+  await updateUser({status, wechat, phone}, {where: {id: data.id}})
   await updateUserData(userinfo, {where: {uid: data.id}})
 }
 
