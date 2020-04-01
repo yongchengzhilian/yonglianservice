@@ -20,7 +20,7 @@ app.use(jwtKoa({
   secret:SECRET
 }).unless({
   // 这些路由不需要校验jwt
-  path: [/^\/login/]
+  path: [/^\/login/, /^\/auth/]
 }))
 app.use(catchError)
 app.use(bodyparser({

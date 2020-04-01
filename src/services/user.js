@@ -2,12 +2,17 @@
  * @description 用户相关请求
  * @author zhaojianbo
  */
-
-const User = require('../db/model/User')
-const InviteRecord = require('../db/model/InviteRecord')
+const {Op} = require('sequelize')
+const {
+  User,
+  UserData,
+  InviteRecord,
+  UserIdcard,
+  AUthRecord
+} = require('../db/model/index')
+const {USER_STATUS} = require('../enum/User')
 const Sequelize = require('sequelize')
 const {APP_ID} = require('../config/wx')
-const seq = require('../db/seq')
 const {RED_LINE_RECORD_TYPE} = require('../enum/RedLine')
 const {addRedLineRecord} = require('./redLine')
 
@@ -62,6 +67,97 @@ const updateUser = async function(data, options) {
   return res
 }
 
+const getAuthListService = async function() {
+  const res = await User.findAll({
+    attributes: [
+      'nickname',
+      'gender',
+      'wechat',
+      'avatar',
+      'phone',
+      'status',
+      'id'
+    ],
+    include: [
+      {
+        model: UserData,
+        attributes: [
+          'income',
+          'education',
+          'house_car',
+          'updatedAt',
+          'marriage',
+          'current_place',
+          'native_place',
+          'height',
+          'weight',
+          'work'
+        ]
+      }
+    ],
+    where: {
+      status: {
+        [Op.or]: [USER_STATUS.DATA_AUTHING_1, USER_STATUS.DATA_AUTHING_2],
+      }
+    }
+  })
+  return res
+}
+
+const getAuthDetailService = async function (id) {
+  const res = await User.findOne({
+    attributes: [
+      'nickname',
+      'gender',
+      'wechat',
+      'avatar',
+      'phone',
+      'status',
+      'id'
+    ],
+    include: [
+      {
+        model: UserData,
+        attributes: [
+          'income',
+          'education',
+          'house_car',
+          'updatedAt',
+          'marriage',
+          'photos',
+          'current_place',
+          'native_place',
+          'about_me',
+          'hobby',
+          'about_ta',
+          'height',
+          'weight',
+          'work'
+        ]
+      },
+      {
+        model: UserIdcard,
+        attributes: [
+          'idcard_num',
+          'name',
+          'idcard_front',
+          'idcard_back'
+        ]
+      },
+      {
+        model: AUthRecord,
+        attributes: [
+          'auth_nickname',
+          'type',
+          'comment'
+        ]
+      }
+    ],
+    where: {id}
+  })
+  return res
+}
+
 
 const createUser = async function(data, inviteId, city = 'NING_BO') {
   // 添加新用户
@@ -106,5 +202,7 @@ module.exports = {
   getUserInfoByUidFromTable,
   createUser,
   updateUser,
+  getAuthListService,
+  getAuthDetailService,
   addRedLine
 }
