@@ -11,7 +11,13 @@ const {
   idcardIsExist,
   saveUserData,
   saveIdcardInfo,
+  getLikeRecord,
+  addLike,
   getSelfInfo,
+  getUserDetail,
+  userRefuse,
+  userAgree,
+  applyList,
   updateNickname
 } = require('../../controller/user')
 const {
@@ -31,7 +37,10 @@ router.prefix('/user')
  * */
 router.post('/list', async (ctx, next) => {
   const {limit, page} = ctx.request.body
-  const list = await getList(limit, page)
+  const token = ctx.header.authorization
+  const {gender} = await parseToken(token)
+  const targetGender = gender === 1 ? 2 : 1
+  const list = await getList(limit, page, targetGender)
   ctx.body = new SuccessModel({data: list})
 })
 
@@ -45,6 +54,16 @@ router.post('/updateNickname', genValidator(nicknameValidate), async (ctx, next)
   const {id} = await parseToken(token)
   await updateNickname(nickname, id)
   ctx.body = new SuccessModel({data: '修改成功'})
+})
+
+/**
+ * 修改获取用户详情
+ * @param ${nickname}
+ * */
+router.get('/detail/:uid', async (ctx, next) => {
+  const {uid} = ctx.params
+  const data = await getUserDetail(uid)
+  ctx.body = new SuccessModel(data)
 })
 
 /**
@@ -109,6 +128,91 @@ router.post('/saveUserData', async (ctx, next) => {
     ...ctx.request.body
   })
   ctx.body = new SuccessModel({data: '保存成功'})
+})
+
+/**
+ * 获取用户喜欢记录
+ * @param ${uid}
+ * */
+router.get('/getLikeRecord/:uid', async (ctx, next) => {
+  const {uid} = ctx.params
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  const data = await getLikeRecord({id, uid})
+  ctx.body = new SuccessModel(data)
+})
+
+router.post('/like', async (ctx, next) => {
+  const {uid, content, type} = ctx.request.body
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  await addLike({id, uid, content, type})
+})
+
+
+/**
+ * 我喜歡列表
+ * @param ${uid}
+ * */
+router.post('/likeList', async (ctx, next) => {
+  const {uid} = ctx.request.body
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  await userRefuse({id, uid})
+})
+
+/**
+ * 喜歡我列表
+ * @param ${}
+ * */
+router.post('/likedList', async (ctx, next) => {
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  await userRefuse({id, uid})
+})
+
+/**
+ * 申請列表
+ * @param ${}
+ * */
+router.post('/applyList', async (ctx, next) => {
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  const list = await applyList(id)
+  ctx.body = new SuccessModel(list)
+})
+
+/**
+ * 拒絕喜歡
+ * @param ${uid}
+ * */
+router.post('/refuse', async (ctx, next) => {
+  const {uid} = ctx.request.body
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  await userRefuse({id, uid})
+})
+
+/**
+ * 同意牽綫
+ * @param ${uid}
+ * */
+router.post('/agree', async (ctx, next) => {
+  const {uid} = ctx.request.body
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  await userAgree({id, uid})
+})
+
+/**
+ * 斷開牽綫
+ * @param ${uid}
+ * */
+router.post('/breakUp', async (ctx, next) => {
+  const {uid} = ctx.request.body
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  await userAgree({id, uid})
 })
 
 /**

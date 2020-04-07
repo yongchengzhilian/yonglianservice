@@ -8,7 +8,8 @@ const {
   UserData,
   InviteRecord,
   UserIdcard,
-  AUthRecord
+  AUthRecord,
+  UserAuthData
 } = require('../db/model/index')
 const {USER_STATUS} = require('../enum/User')
 const Sequelize = require('sequelize')
@@ -45,9 +46,29 @@ const getUserInfoByUnionid = async function(unionid) {
   return res
 }
 
-const addRedLine = async function (uid, num = 1) {
+const updateRedLine = async function (uid, num = 1) {
   await User.update({
-    red_line_count: Sequelize.literal('red_line_count + 1'),
+    red_line_count: Sequelize.literal('red_line_count +'+ num),
+  }, {
+    where: {
+      id: uid
+    }
+  })
+}
+
+const updateLikeCount = async function(uid, num = 1) {
+  await User.update({
+    like_count: Sequelize.literal('like_count +' + num),
+  }, {
+    where: {
+      id: uid
+    }
+  })
+}
+
+const updateLikedCount = async function(uid, num = 1) {
+  await User.update({
+    liked_count: Sequelize.literal('liked_count +'+ num),
   }, {
     where: {
       id: uid
@@ -80,7 +101,7 @@ const getAuthListService = async function() {
     ],
     include: [
       {
-        model: UserData,
+        model: UserAuthData,
         attributes: [
           'income',
           'education',
@@ -117,8 +138,9 @@ const getAuthDetailService = async function (id) {
     ],
     include: [
       {
-        model: UserData,
+        model: UserAuthData,
         attributes: [
+          'old_status',
           'income',
           'education',
           'house_car',
@@ -149,9 +171,53 @@ const getAuthDetailService = async function (id) {
         attributes: [
           'auth_nickname',
           'type',
+          'createdAt',
           'comment'
         ]
       }
+    ],
+    where: {id}
+  })
+  return res
+}
+
+const getUserStatusByUid = async function (uid) {
+  const res =  await User.findOne({
+    attributes: ['status'],
+    where: {id: uid}
+  })
+  return res
+}
+
+const getSelfInfoService = async function(id) {
+  const res = await User.findOne({
+    attributes: [
+      'nickname',
+      'wechat',
+      'avatar',
+      'phone',
+      'status',
+    ],
+    include: [
+      {
+        model: UserData,
+        attributes: [
+          'income',
+          'education',
+          'house_car',
+          'updatedAt',
+          'marriage',
+          'photos',
+          'current_place',
+          'native_place',
+          'about_me',
+          'hobby',
+          'about_ta',
+          'height',
+          'weight',
+          'work'
+        ]
+      },
     ],
     where: {id}
   })
@@ -164,6 +230,7 @@ const createUser = async function(data, inviteId, city = 'NING_BO') {
   let res = await User.create({
     nickname: data.nickName,
     avatar: data.avatarUrl,
+    status: USER_STATUS.NEED_IDCARD,
     gender: data.gender,
     open_id: data.openId,
     union_id: data.unionId,
@@ -189,7 +256,7 @@ const createUser = async function(data, inviteId, city = 'NING_BO') {
 
     // 如果邀请每5个人 送邀请人一条红线
     if (inviteList.count !== 0 && inviteList.count % 5 === 0) {
-      await addRedLine(inviteId)
+      await updateRedLine(inviteId)
       await addRedLineRecord(RED_LINE_RECORD_TYPE.INVITE, '邀请赠送', inviteId)
     }
   }
@@ -202,7 +269,11 @@ module.exports = {
   getUserInfoByUidFromTable,
   createUser,
   updateUser,
+  getSelfInfoService,
   getAuthListService,
   getAuthDetailService,
-  addRedLine
+  getUserStatusByUid,
+  updateRedLine,
+  updateLikeCount,
+  updateLikedCount
 }

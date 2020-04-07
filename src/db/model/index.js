@@ -11,6 +11,7 @@ const UserLikeRecord = require('./UserLikeRecord')
 const UserLoveRecord = require('./UserLoveRecord')
 const LineRecord = require('./LineRecord')
 const AUthRecord = require('./AuthRecord')
+const UserAuthData = require('./UserAuthData')
 
 InviteRecord.belongsTo(User, {
   foreignKey: 'invide_id',
@@ -23,6 +24,13 @@ AUthRecord.belongsTo(User, {
   foreignKey: 'uid',
 })
 User.hasMany(AUthRecord, {
+  foreignKey: 'uid'
+})
+
+UserAuthData.belongsTo(User, {
+  foreignKey: 'uid',
+})
+User.hasMany(UserAuthData, {
   foreignKey: 'uid'
 })
 
@@ -74,4 +82,5 @@ module.exports = {
   AUthRecord,
   UserLoveRecord,
   LineRecord,
+  UserAuthData,
 }

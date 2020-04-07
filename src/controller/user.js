@@ -5,11 +5,25 @@
 
 const {
   getUserList,
-  createUserData,
+  getUserDetailService,
   updateUserData
 } = require('../services/userData')
 const {
-  updateUser
+  getLikeRecordService,
+  getUserLikedRecord,
+  updateLikeRecord,
+  addLikeRecord
+} = require('../services/userLikeRecord')
+const {
+  createUserAuthData,
+  updateUserAuthData
+} = require('../services/userAuthData')
+const {
+  updateUser,
+  getSelfInfoService,
+  updateLikeCount,
+  updateLikedCount,
+  updateRedLine
 } = require('../services/user')
 
 const {
@@ -20,11 +34,25 @@ const {
   analyzeIDCard
 } = require('../utils/utils')
 
-const {USER_STATUS} = require('../enum/User')
+const {
+  addRedLineRecord
+} = require('../services/redLine')
 
-const getList = async function(limit, page, city = 'NING_BO') {
-  let list = await getUserList(limit, page, city)
-  return list.map(item => item.dataValues)
+const {
+  USER_STATUS,
+  LIKE_RECORD_TYPE,
+} = require('../enum/User')
+
+const {
+  RED_LINE_RECORD_TYPE
+} = require('../enum/RedLine')
+
+const getList = async function(limit, page, gender, city = 'NING_BO') {
+  let list = await getUserList(limit, page, gender, city)
+  const listFormat = list.map(item => {
+    return item.dataValues.user_data[0]
+  })
+  return listFormat
 }
 
 const updateNickname = async function(nickname, id) {
@@ -60,11 +88,10 @@ const saveIdcardInfo = async function(data) {
   await updateUser({
     gender, status
   }, {where: {id}})
-  await createUserData({
+  await createUserAuthData({
     gender,
     nickname,
     avatar,
-    city: 'NING_BO',
     native_place: userInfo.native_place,
     birthday: userInfo.birthday,
     uid: id
@@ -82,12 +109,12 @@ const idcardIsExist = async function(idcardNum) {
 const saveUserData = async function(data) {
   let status = USER_STATUS.DATA_AUTHING_1
   const wechat = data.wechat
-  const phone = data.phone
+  const phone = data.mobile
   if (data.status !== USER_STATUS.NEED_USER_DATA) {
     status = USER_STATUS.DATA_AUTHING_2
   }
   const userinfo = {
-    status,
+    old_status: data.status,
     income: data.income,
     education: data.education,
     photos: data.photo,
@@ -102,11 +129,99 @@ const saveUserData = async function(data) {
     work: data.work
   }
   await updateUser({status, wechat, phone}, {where: {id: data.id}})
-  await updateUserData(userinfo, {where: {uid: data.id}})
+  await updateUserAuthData(userinfo, {where: {uid: data.id}})
 }
 
-const getSelfInfo = async function(data) {
+const getSelfInfo = async function(id) {
+  const res = await getSelfInfoService(id)
+  let selfInfo = res.dataValues
+  const data = selfInfo.user_data[0].dataValues
+  delete selfInfo.user_data
+  return {...selfInfo, ...data}
+}
 
+const getUserDetail = async function (uid) {
+  const res = await getUserDetailService(uid)
+  return res.dataValues
+}
+
+const getLikeRecord = async function(data) {
+  const res = await getLikeRecordService(data)
+  if (!res) {
+    return {}
+  }
+  return res.dataValues
+}
+
+const addLike = async function(data) {
+  // 第一次喜欢
+  if (data.type === 'create') {
+    const res = await addLikeRecord({
+      uid: data.id,
+      content: data.content,
+      like_id: data.uid,
+      type: LIKE_RECORD_TYPE.I_LIKE
+    })
+    await addLikeRecord({
+      uid: data.uid,
+      content: data.content,
+      mid: res.dataValues.id,
+      like_id: data.id,
+      type: LIKE_RECORD_TYPE.LIKE_ME
+    })
+    await updateLikeCount(data.id)
+    await updateLikedCount(data.uid)
+    await updateRedLine(data.id, -1)
+    await addRedLineRecord({
+      uid: data.id,
+      type: RED_LINE_RECORD_TYPE.LOVE,
+      comment: '牵线扣除'
+    })
+  } else {
+    // 第二次喜欢
+    await updateLikeRecord({
+      content: data.content,
+      type: LIKE_RECORD_TYPE.I_LIKE
+    }, {
+      where: {
+        uid: data.id,
+        like_id: data.uid,
+      }
+    })
+    await updateLikeRecord({
+      content: data.content,
+      type: LIKE_RECORD_TYPE.LIKE_ME
+    }, {
+      where: {
+        uid: data.uid,
+        like_id: data.id
+      }
+    })
+    await updateRedLine(data.id, -1)
+    await addRedLineRecord({
+      uid: data.id,
+      type: RED_LINE_RECORD_TYPE.LOVE,
+      comment: '牵线扣除'
+    })
+  }
+
+}
+
+const userRefuse = async function(data) {
+
+}
+
+const userAgree = async function(data) {}
+
+const applyList = async function(id) {
+  const res = await getUserLikedRecord(id)
+  const list = res.map(item => {
+    const record = item.dataValues
+    let user = record.user.dataValues
+    delete record.user
+    return {...record, ...user}
+  })
+  return list
 }
 
 module.exports = {
@@ -114,7 +229,13 @@ module.exports = {
   updateAvatar,
   idcardIsExist,
   getSelfInfo,
+  getLikeRecord,
+  addLike,
   saveIdcardInfo,
   saveUserData,
+  getUserDetail,
+  userRefuse,
+  userAgree,
+  applyList,
   updateNickname
 }

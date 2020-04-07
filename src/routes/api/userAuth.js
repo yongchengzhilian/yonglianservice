@@ -8,6 +8,7 @@ const {SuccessModel} = require('../../model/ResModel')
 const {
   getAuthList,
   getAuthDetail,
+  userAuth,
 } = require('../../controller/userAuth')
 router.prefix('/auth')
 
@@ -19,9 +20,14 @@ router.get('/getAuthList', async (ctx, next) => {
 
 router.get('/getAuthDetail/:uid', async (ctx, next) => {
   const {uid} = ctx.params
-  console.log(123, uid)
   const data = await getAuthDetail(uid)
   ctx.body = new SuccessModel(data)
+})
+
+router.post('/userAuth', async (ctx, next) => {
+  const {uid, nickname, content, type, oldStatus} = ctx.request.body
+  await userAuth({uid, nickname, content, type, oldStatus})
+  ctx.body = new SuccessModel('审核成功')
 })
 
 module.exports = router

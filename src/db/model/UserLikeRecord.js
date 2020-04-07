@@ -4,12 +4,16 @@
  */
 
 const seq = require('../seq')
-const { INTEGER } = require('../types')
+const { INTEGER, STRING } = require('../types')
 
 const UserLikeRecord = seq.define('user_like_record', {
   uid: {
     type: INTEGER,
     comment: '用户id',
+  },
+  mid: {
+    type: INTEGER,
+    comment: '中间关联id',
   },
   type: {
     type: INTEGER,
@@ -18,6 +22,10 @@ const UserLikeRecord = seq.define('user_like_record', {
   like_id: {
     type: INTEGER,
     comment: '对方id',
+  },
+  content: {
+    type: STRING,
+    comment: '留言内容',
   }
 })
 

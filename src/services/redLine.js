@@ -5,8 +5,10 @@
 
 const LineRecord = require('../db/model/LineRecord')
 
-const addRedLineRecord = async function (type, comment, uid) {
-  await LineRecord.create({
-    uid, comment, type
-  })
+const addRedLineRecord = async function (data) {
+  await LineRecord.create(data)
+}
+
+module.exports = {
+  addRedLineRecord
 }

@@ -23,14 +23,14 @@ const generateToken = function(userinfo) {
 const getUserinfo = async function (iv, encryptedData, code, inviteId) {
   // 先获取用户unionid
   const wxRes = await wxLogin(code)
-  const {session_key, unionid} = wxRes
+  const {session_key} = wxRes
 
   // 解密
   const userinfo = decryptData(session_key, encryptedData, iv)
   console.log(userinfo, 'userinfo')
 
   // 判断该用户是否是新用户
-  let user = await getUserInfoByUnionid(unionid)
+  let user = await getUserInfoByUnionid(userinfo.unionId)
 
   if (!user) {
     // 用户不存在 创建用户
