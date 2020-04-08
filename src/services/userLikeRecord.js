@@ -48,7 +48,7 @@ const getUserLikedRecord = async function(id) {
       }
     ],
     where: {
-      like_id: id,
+      uid: id,
       type: LIKE_RECORD_TYPE.LIKE_ME
     }
   })

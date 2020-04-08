@@ -137,8 +137,10 @@ const getLoveDataService = async function (id) {
       {
         model: UserData,
         attributes: [
+          'uid',
           'income',
           'education',
+          'birthday',
           'house_car',
           'marriage',
           'current_place',
