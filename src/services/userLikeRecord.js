@@ -42,6 +42,7 @@ const getUserLikedRecord = async function(id) {
         model: User,
         attributes: [
           'nickname',
+          'gender',
           'avatar'
         ]
       }

@@ -18,6 +18,7 @@ const {
   userRefuse,
   userAgree,
   applyList,
+  getLoveData,
   updateNickname
 } = require('../../controller/user')
 const {
@@ -147,6 +148,7 @@ router.post('/like', async (ctx, next) => {
   const token = ctx.header.authorization
   const {id} = await parseToken(token)
   await addLike({id, uid, content, type})
+  ctx.body = new SuccessModel({data: '操作成功'})
 })
 
 
@@ -159,9 +161,23 @@ router.post('/likeList', async (ctx, next) => {
   const token = ctx.header.authorization
   const {id} = await parseToken(token)
   await userRefuse({id, uid})
+  ctx.body = new SuccessModel({data: '操作成功'})
 })
 
 /**
+ * 互相喜欢资料
+ * @param ${uid}
+ * */
+router.post('/loveData', async (ctx, next) => {
+  const {uid} = ctx.request.body
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  const loveData = await getLoveData({uid, id})
+  ctx.body = new SuccessModel(loveData)
+})
+
+
+/**uid
  * 喜歡我列表
  * @param ${}
  * */
@@ -169,6 +185,7 @@ router.post('/likedList', async (ctx, next) => {
   const token = ctx.header.authorization
   const {id} = await parseToken(token)
   await userRefuse({id, uid})
+  ctx.body = new SuccessModel({data: '操作成功'})
 })
 
 /**
@@ -191,6 +208,7 @@ router.post('/refuse', async (ctx, next) => {
   const token = ctx.header.authorization
   const {id} = await parseToken(token)
   await userRefuse({id, uid})
+  ctx.body = new SuccessModel({data: '操作成功'})
 })
 
 /**
@@ -202,6 +220,7 @@ router.post('/agree', async (ctx, next) => {
   const token = ctx.header.authorization
   const {id} = await parseToken(token)
   await userAgree({id, uid})
+  ctx.body = new SuccessModel({data: '操作成功'})
 })
 
 /**
@@ -213,6 +232,7 @@ router.post('/breakUp', async (ctx, next) => {
   const token = ctx.header.authorization
   const {id} = await parseToken(token)
   await userAgree({id, uid})
+  ctx.body = new SuccessModel({data: '操作成功'})
 })
 
 /**

@@ -125,6 +125,37 @@ const getAuthListService = async function() {
   return res
 }
 
+const getLoveDataService = async function (id) {
+  const res = await User.findOne({
+    attributes: [
+      'nickname',
+      'gender',
+      'wechat',
+      'avatar',
+    ],
+    include: [
+      {
+        model: UserData,
+        attributes: [
+          'income',
+          'education',
+          'house_car',
+          'marriage',
+          'current_place',
+          'native_place',
+          'height',
+          'weight',
+          'work'
+        ]
+      }
+    ],
+    where: {
+      id
+    }
+  })
+  return res
+}
+
 const getAuthDetailService = async function (id) {
   const res = await User.findOne({
     attributes: [
@@ -275,5 +306,6 @@ module.exports = {
   getUserStatusByUid,
   updateRedLine,
   updateLikeCount,
+  getLoveDataService,
   updateLikedCount
 }

@@ -40,7 +40,6 @@ const getUserList = async function(limit, page, gender, city = 'NING_BO') {
       }
     }
   })
-  console.log(666, res)
   return res
 }
 

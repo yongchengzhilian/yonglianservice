@@ -23,6 +23,7 @@ const {
   getSelfInfoService,
   updateLikeCount,
   updateLikedCount,
+  getLoveDataService,
   updateRedLine
 } = require('../services/user')
 
@@ -39,9 +40,16 @@ const {
 } = require('../services/redLine')
 
 const {
+  createLoveRecord
+} = require('../services/userLoveRecord')
+
+const {
   USER_STATUS,
   LIKE_RECORD_TYPE,
+  LOVE_TYPE
 } = require('../enum/User')
+
+const {timeFormat} = require('../utils/dt')
 
 const {
   RED_LINE_RECORD_TYPE
@@ -208,10 +216,71 @@ const addLike = async function(data) {
 }
 
 const userRefuse = async function(data) {
-
+  await updateLikeRecord({
+    type: LIKE_RECORD_TYPE.I_LIKE_FAIL
+  }, {
+    where: {
+      uid: data.uid,
+      like_id: data.id,
+    }
+  })
+  await updateLikeRecord({
+    type: LIKE_RECORD_TYPE.LIKE_ME_FAIL
+  }, {
+    where: {
+      uid: data.id,
+      like_id: data.uid,
+    }
+  })
+  await updateRedLine(data.uid, 1)
+  await addRedLineRecord({
+    uid: data.uid,
+    type: RED_LINE_RECORD_TYPE.REFUSE,
+    comment: '拒绝反还'
+  })
 }
 
-const userAgree = async function(data) {}
+const userAgree = async function(data) {
+  await updateUser({
+    status: USER_STATUS.LOVING,
+    liking_id: data.uid
+  }, {where: {id: data.id}})
+
+  await updateUser({
+    status: USER_STATUS.LOVING,
+    liking_id: data.id
+  }, {where: {id: data.uid}})
+
+  await updateLikeRecord({
+    type: LIKE_RECORD_TYPE.I_LIKE_SUCCESS
+  }, {where:
+      {
+        uid: data.uid,
+        like_id: data.id
+      }
+  })
+  await updateLikeRecord({
+    type: LIKE_RECORD_TYPE.LIKE_ME_SUCCESS
+  }, {where:
+      {
+        uid: data.id,
+        like_id: data.uid
+      }
+  })
+  const loves = [
+    {
+      uid: data.id,
+      love_type: LOVE_TYPE.LOVE_ME,
+      love_id: data.uid
+    },
+    {
+      uid: data.uid,
+      love_type: LOVE_TYPE.I_LOVE,
+      love_id: data.id
+    }
+  ]
+  await createLoveRecord(loves)
+}
 
 const applyList = async function(id) {
   const res = await getUserLikedRecord(id)
@@ -219,9 +288,17 @@ const applyList = async function(id) {
     const record = item.dataValues
     let user = record.user.dataValues
     delete record.user
+    record.updatedAt = timeFormat(record.updatedAt)
     return {...record, ...user}
   })
   return list
+}
+const getLoveData = async function(data) {
+  const res = await getLoveDataService(data.uid)
+  const loveData = res.dataValues
+  const userData = loveData.user_data[0].dataValues
+  delete loveData.user_data
+  return {...loveData, ...userData}
 }
 
 module.exports = {
@@ -237,5 +314,6 @@ module.exports = {
   userRefuse,
   userAgree,
   applyList,
+  getLoveData,
   updateNickname
 }

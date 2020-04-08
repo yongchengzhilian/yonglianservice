@@ -11,10 +11,10 @@ const UserLoveRecord = seq.define('user_love_record', {
     type: INTEGER,
     comment: '用户id',
   },
-  type: {
-    type: INTEGER,
-    comment: '喜欢类型：1 我喜欢、2 喜欢我',
-  },
+  // type: {
+  //   type: INTEGER,
+  //   comment: '喜欢类型：1 我喜欢、2 喜欢我',
+  // },
   love_id: {
     type: INTEGER,
     comment: '对方id',
