@@ -56,6 +56,18 @@ const analyzeIDCard = function(idcardNum) {
   return userInfo
 }
 
+function getClientIP(req) {
+  console.log(2222, req.headers['x-forwarded-for'])
+  console.log(1111, req.connection.remoteAddress)
+  // console.log(req.socket)
+
+  return req.headers['x-forwarded-for'] || // 判断是否有反向代理 IP
+    req.connection.remoteAddress || // 判断 connection 的远程 IP
+    req.socket.remoteAddress || // 判断后端的 socket 的 IP
+    req.connection.socket.remoteAddress;
+};
+
 module.exports = {
-  analyzeIDCard
+  analyzeIDCard,
+  getClientIP,
 }

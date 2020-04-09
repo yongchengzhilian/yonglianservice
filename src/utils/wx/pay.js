@@ -2,7 +2,19 @@
  * @description 根据用户的下单请求调用微信统一下单api拿到范围的关键数据prepay_id
  * @author zhaojianbo
  * */
-export const pay = async ({openid,orderId,desc,totalPrice,spbill_create_ip})=> {
+
+const {
+  APP_ID
+} = require('../../config/wx')
+const request = require('request')
+const crypto = require('crypto')
+const xml2js = require('xml2js')
+const appid = APP_ID.NING_BO
+const mch_id = '1556840741'
+const key = 'poiuytrewqasdfghjklmnbvcxz123456'
+const notify_url = 'https://www.qike.site/api/pay/notify'
+
+const pay = async ({openid,orderId,desc,totalPrice,spbill_create_ip})=> {
   // 通过查阅文档,调用统一下单有10个参数是必须的
   let obj = {
     appid,
@@ -36,19 +48,18 @@ export const pay = async ({openid,orderId,desc,totalPrice,spbill_create_ip})=> {
     // console.log(res);
   }catch(e){
     res = e;
-    console.log(e);
   }
   return res;
 }
 
+const prepay_url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
 
 /**
- * 统一下单 prepay_url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
+ * 统一下单
  * @param {Object} obj 调用统一下单的必须参数
  */
 const wechatPay = (obj)=>{
   let xml = json2xml(obj);
-  console.log(xml)
   return new Promise((resolve,reject)=>{
     // 这里用了reques库,不熟悉的同学可以看看相关文档 https://github.com/request/request
     // 总之就是向微信的统一下单接口提交一个xml
@@ -57,7 +68,6 @@ const wechatPay = (obj)=>{
         reject(err);
       }else{
         //如果成功即可得到微信返回参数
-        console.log(body);
         let obj = parseXml(body).xml;
         resolve(obj);
       }
@@ -71,7 +81,6 @@ const wechatPay = (obj)=>{
  * @param {String} str
  */
 const getSign = (str)=>{
-  console.log(str)
   let hash = crypto.createHash('md5').update(str,'utf8');
   return hash.digest('hex').toUpperCase();
 }
@@ -138,6 +147,9 @@ const getClientPayConfig = (prepay_id)=>{
   return obj;
 }
 
+module.exports = {
+  pay
+}
 
 
 // https://www.jianshu.com/p/bfd3119bc1bc
