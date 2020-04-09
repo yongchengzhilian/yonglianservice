@@ -27,7 +27,6 @@ const getUserinfo = async function (iv, encryptedData, code, inviteId) {
 
   // 解密
   const userinfo = decryptData(session_key, encryptedData, iv)
-  console.log(userinfo, 'userinfo')
 
   // 判断该用户是否是新用户
   let user = await getUserInfoByUnionid(userinfo.unionId)

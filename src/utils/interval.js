@@ -7,11 +7,17 @@ const {
   ONE_HOURS_INTERVAL
 } = require('../config/config')
 const {LIKE_RECORD_TYPE} = require('../enum/User')
+
 const {RED_LINE_RECORD_TYPE} = require('../enum/RedLine')
 const {
   getUserLikeList,
   updateLikeRecord,
 } = require('../services/userLikeRecord')
+
+const {
+  refreshWxAccessToken
+} = require('./wx/refreshAccessToken')
+
 const {
   updateRedLine
 } = require('../services/user')
@@ -20,7 +26,7 @@ const {
   addRedLineRecord
 } = require('../services/redLine')
 
-const userLikeInterval = setInterval(async function () {
+const userLikeHandle = async function() {
   const userLikeList = await getUserLikeList()
   for (let i = 0; i < userLikeList.length; i++) {
     let record = userLikeList[i].dataValues
@@ -43,10 +49,34 @@ const userLikeInterval = setInterval(async function () {
         type: RED_LINE_RECORD_TYPE.RETURN,
         comment: '牵线超时自动返还'
       })
+
+      const res = getUserInfoByUidFromTable(record.uid)
+      subscribeMessage.applyResult({
+        openid: res.dataValues.open_id,
+        data: {
+          phrase1: '牵线失败',
+          thing2: '红线已返回,再看看其他有缘人吧'
+        }
+      })
     }
+  }
+}
+
+refreshWxAccessToken()
+
+const interval = setInterval(async function () {
+  try {
+    userLikeHandle()
+  } catch (e) {
+
+  }
+  try {
+    refreshWxAccessToken()
+  } catch (e) {
+
   }
 }, ONE_HOURS_INTERVAL)
 
 module.exports = {
-  userLikeInterval
+  userLikeInterval: interval
 }

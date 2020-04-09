@@ -24,7 +24,8 @@ const {
   updateLikeCount,
   updateLikedCount,
   getLoveDataService,
-  updateRedLine
+  updateRedLine,
+  getUserInfoByUidFromTable
 } = require('../services/user')
 
 const {
@@ -40,16 +41,23 @@ const {
 } = require('../services/redLine')
 
 const {
-  createLoveRecord
+  createLoveRecord,
+  updateLoveRecord
 } = require('../services/userLoveRecord')
 
 const {
   USER_STATUS,
+  LOVE_REFUSE_TYPE,
   LIKE_RECORD_TYPE,
   LOVE_TYPE
 } = require('../enum/User')
 
-const {timeFormat} = require('../utils/dt')
+const {
+  timeFormat,
+  getCurrentDate
+} = require('../utils/dt')
+
+const {subscribeMessage} = require('../utils/wx/subscribeMessage')
 
 const {
   RED_LINE_RECORD_TYPE
@@ -213,6 +221,21 @@ const addLike = async function(data) {
     })
   }
 
+  getUserInfoByUidFromTable(data.uid).then(res => {
+    subscribeMessage.applyMessage({
+      openid: res.dataValues.open_id,
+      data: {
+        name1: {
+          value: res.dataValues.nickname,
+        },
+        date2: {
+          value: getCurrentDate(),
+        }
+      }
+    })
+  })
+
+
 }
 
 const userRefuse = async function(data) {
@@ -237,6 +260,16 @@ const userRefuse = async function(data) {
     uid: data.uid,
     type: RED_LINE_RECORD_TYPE.REFUSE,
     comment: '拒绝反还'
+  })
+
+  getUserInfoByUidFromTable(data.uid).then(res => {
+    subscribeMessage.applyResult({
+      openid: res.dataValues.open_id,
+      data: {
+        phrase1: '牵线失败',
+        thing2: '红线已返回,再看看其他有缘人吧'
+      }
+    })
   })
 }
 
@@ -280,6 +313,15 @@ const userAgree = async function(data) {
     }
   ]
   await createLoveRecord(loves)
+  getUserInfoByUidFromTable(data.uid).then(res => {
+    subscribeMessage.applyResult({
+      openid: res.dataValues.open_id,
+      data: {
+        phrase1: '牵线成功',
+        thing2: '快来查看您的有缘人'
+      }
+    })
+  })
 }
 
 const applyList = async function(id) {
@@ -301,6 +343,41 @@ const getLoveData = async function(data) {
   return {...loveData, ...userData}
 }
 
+const userBreakUp = async function (data) {
+  await updateUser({
+    status: USER_STATUS.SINGLE_USER,
+    liking_id: null
+  }, {where: {id: data.id}})
+  await updateUser({
+    status: USER_STATUS.SINGLE_USER,
+    liking_id: null
+  }, {where: {id: data.uid}})
+  await updateLoveRecord({
+    refuse_type: LOVE_REFUSE_TYPE.I_REFUSE
+  }, {where: {
+    uid: data.id,
+      love_id: data.uid
+    }
+  })
+  await updateLoveRecord({
+    refuse_type: LOVE_REFUSE_TYPE.REFUSE_ME
+  }, {where: {
+      uid: data.uid,
+      love_id: data.id
+    }
+  })
+
+  getUserInfoByUidFromTable(data.uid).then(res => {
+    subscribeMessage.breakUp({
+      openid: res.dataValues.open_id,
+      data: {
+        phrase1: '匹配失败',
+        thing2: '再看看其他有缘人吧'
+      }
+    })
+  })
+}
+
 module.exports = {
   getList,
   updateAvatar,
@@ -315,5 +392,6 @@ module.exports = {
   userAgree,
   applyList,
   getLoveData,
+  userBreakUp,
   updateNickname
 }

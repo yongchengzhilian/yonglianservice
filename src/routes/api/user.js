@@ -19,10 +19,12 @@ const {
   userAgree,
   applyList,
   getLoveData,
+  userBreakUp,
   updateNickname
 } = require('../../controller/user')
 const {
   getUserInfoByUid,
+  getCenterData
 } = require('../../controller/login')
 const {genValidator} = require('../../middlewares/validator')
 const {nicknameValidate} = require('../../validator/user')
@@ -31,6 +33,16 @@ const parseToken = require('../../utils/parseToken')
 
 router.prefix('/user')
 
+/**
+ * 获取用户信息
+ * @param ${uid}
+ * */
+router.get('/getCenterData', async (ctx, next) => {
+  const token = ctx.header.authorization
+  const {id} = await parseToken(token)
+  const userinfo = await getCenterData(id)
+  ctx.body = new SuccessModel(userinfo)
+})
 
 /**
  * 获取用户列表
@@ -231,7 +243,7 @@ router.post('/breakUp', async (ctx, next) => {
   const {uid} = ctx.request.body
   const token = ctx.header.authorization
   const {id} = await parseToken(token)
-  await userAgree({id, uid})
+  await userBreakUp({id, uid})
   ctx.body = new SuccessModel({data: '操作成功'})
 })
 

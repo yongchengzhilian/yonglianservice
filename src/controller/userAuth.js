@@ -14,6 +14,8 @@ const {
 const {getUserAuthData} = require('../services/userAuthData')
 const {timeFormat} = require('../utils/dt')
 
+const {subscribeMessage} = require('../utils/wx/subscribeMessage')
+
 const {AUTH_TYPE, USER_STATUS} = require('../enum/User')
 
 
@@ -21,26 +23,13 @@ const getAuthList = async function () {
   const res = await getAuthListService()
   // if () {}
   const list = res.map(item => {
-    const {
-      nickname,
-      gender,
-      wechat,
-      avatar,
-      phone,
-      status,
-      id
-    } = item.dataValues
-    let time = timeFormat(item.dataValues.user_auth_data[0].dataValues.updatedAt)
+    const dataValues = item.dataValues
+    const authData = dataValues.user_auth_data[0].dataValues
+    authData.time = timeFormat(authData.updatedAt)
+    delete dataValues.user_auth_data
     return {
-      nickname,
-      gender,
-      wechat,
-      avatar,
-      phone,
-      status,
-      id,
-      time,
-      ...item.dataValues.user_auth_data[0].dataValues
+      ...dataValues,
+      ...authData
     }
   })
   return list
@@ -53,6 +42,8 @@ const getAuthDetail = async function (id) {
 
 const userAuth = async function(data) {
   const {uid, nickname, content, type, oldStatus} = data
+  let authResult = '不通过'
+  let authMsg = content
   await createAuthRecord({
     type,
     uid: uid,
@@ -63,9 +54,10 @@ const userAuth = async function(data) {
   if (type === AUTH_TYPE.SUCCESS && oldStatus === USER_STATUS.NEED_USER_DATA) {
     status = USER_STATUS.SINGLE_USER
   }
-
   await updateUser({status}, {where: {id: uid}})
   if (type === AUTH_TYPE.SUCCESS) {
+    authResult = '通过'
+    authMsg = '若遇可疑人员， 可向客服举报'
     const userinfo = await getUserAuthData(uid)
     if (oldStatus === USER_STATUS.NEED_USER_DATA) {
       createUserData(userinfo)
@@ -73,6 +65,17 @@ const userAuth = async function(data) {
       updateUserData(userinfo, {where: {uid}})
     }
   }
+  subscribeMessage.authMessage({
+    openid: data.open_id,
+    data: {
+      phrase2: {
+        value: authResult
+      },
+      thing3: {
+        value: authMsg
+      }
+    }
+  })
 
 }
 

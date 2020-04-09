@@ -10,6 +10,13 @@ const APP_SECRET = {
   NING_BO: '593dfdbc4d9f2e1b14f61fa3f3a69fe3'
 }
 
+const TEMPLATE_ID = {
+  AUTH_RESULT: 'HN8Io6y0HHkyCZwkBF6XvLKeecxspv0W601s640eosA',
+  APPLY: '6y7BSPpc-P6T1lubq45n9hQ09keOYyUK9_b9GRFtkN8',
+  APPLY_RESULT: 'Xog069rTvytwulNvY8tdDooykmulHTom2atyRLgPlT8',
+  BREAK_UP: 'YuSbkp4KjrVSOmYxMxdb8MQsdYvUhsEGo-M17cirytg'
+}
+
 const getLoginUrl = function(code, city = 'NING_BO') {
   return 'https://api.weixin.qq.com/sns/jscode2session?appid='
     + APP_ID[city]
@@ -22,5 +29,6 @@ const getLoginUrl = function(code, city = 'NING_BO') {
 module.exports = {
   APP_ID,
   APP_SECRET,
+  TEMPLATE_ID,
   getLoginUrl
 }

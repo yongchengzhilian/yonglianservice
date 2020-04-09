@@ -1,4 +1,4 @@
-require('./src/utils/userLikeInterval')
+require('./src/utils/interval')
 const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')

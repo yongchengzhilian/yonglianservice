@@ -25,6 +25,7 @@ const getUserinfo = async function(params) {
   const res = await User.findOne({
     attributes: [
       'id',
+      'open_id',
       'nickname',
       'gender',
       'avatar',
@@ -93,6 +94,7 @@ const getAuthListService = async function() {
     attributes: [
       'nickname',
       'gender',
+      // 'open_id',
       'wechat',
       'avatar',
       'phone',
@@ -165,6 +167,7 @@ const getAuthDetailService = async function (id) {
       'gender',
       'wechat',
       'avatar',
+      'open_id',
       'phone',
       'status',
       'id'

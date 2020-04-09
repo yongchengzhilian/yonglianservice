@@ -31,6 +31,10 @@ const LOVE_TYPE = {
   LOVE_ME: 2
 }
 
+const LOVE_REFUSE_TYPE = {
+  I_REFUSE: 1,
+  REFUSE_ME: 2
+}
 
 const LIKE_RECORD_TYPE = {
   I_LIKE: 1, // 我喜欢
@@ -49,4 +53,5 @@ module.exports = {
   AUTH_TYPE,
   LIKE_RECORD_TYPE,
   LOVE_TYPE,
+  LOVE_REFUSE_TYPE,
 }

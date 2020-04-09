@@ -25,8 +25,8 @@ router.get('/getAuthDetail/:uid', async (ctx, next) => {
 })
 
 router.post('/userAuth', async (ctx, next) => {
-  const {uid, nickname, content, type, oldStatus} = ctx.request.body
-  await userAuth({uid, nickname, content, type, oldStatus})
+  const {uid, nickname, content, type, oldStatus, open_id} = ctx.request.body
+  await userAuth({uid, nickname, content, type, oldStatus, open_id})
   ctx.body = new SuccessModel('审核成功')
 })
 

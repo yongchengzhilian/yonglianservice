@@ -21,13 +21,6 @@ router.get('/getUserInfoByUid/:uid', async (ctx, next) => {
   ctx.body = new SuccessModel(userinfo)
 })
 
-// 获取用户信息 不生成token
-router.get('/getCenterData/:uid', async (ctx, next) => {
-  let { uid } = ctx.params
-  const userinfo = await getCenterData(uid)
-  ctx.body = new SuccessModel(userinfo)
-})
-
 router.post('/getUserinfo', async (ctx, next) => {
   const {
     iv,

@@ -13,6 +13,12 @@ const createLoveRecord = async function (data) {
   return res
 }
 
+const updateLoveRecord = async function(data, options) {
+  const res = await UserLoveRecord.update(data, options)
+  return res
+}
+
 module.exports = {
-  createLoveRecord
+  createLoveRecord,
+  updateLoveRecord
 }
