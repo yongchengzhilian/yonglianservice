@@ -12,7 +12,7 @@ const xml2js = require('xml2js')
 const appid = APP_ID.NING_BO
 const mch_id = '1556840741'
 const key = 'poiuytrewqasdfghjklmnbvcxz123456'
-const notify_url = 'https://www.qike.site/api/pay/notify'
+const notify_url = 'https://www.qike.site/yongcheng/pay/notify'
 
 const pay = async ({openid,orderId,desc,totalPrice,spbill_create_ip})=> {
   // 通过查阅文档,调用统一下单有10个参数是必须的

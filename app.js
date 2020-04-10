@@ -5,6 +5,7 @@ const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
+require('body-parser-xml')(bodyparser);
 const logger = require('koa-logger')
 const { initRouters } = require('./src/utils/initRouters')
 const catchError = require('./src/middlewares/exception/index')
