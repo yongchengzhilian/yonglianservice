@@ -7,6 +7,10 @@ const router = require('koa-router')()
 const {SuccessModel} = require('../../model/ResModel')
 const {pay} = require('../../utils/wx/pay')
 const {getClientIP} = require('../../utils/utils')
+const raw = require('raw-body');
+const fxp = require("fast-xml-parser");
+
+const inflate = require('inflation');
 
 router.prefix('/pay')
 
@@ -29,8 +33,11 @@ router.post('/order', async (ctx, next) => {
   ctx.body = new SuccessModel(res)
 })
 
-router.get('/notify', async (ctx, next) => {
-  console.log(111, ctx.params)
+router.post('/notify', async (ctx, next) => {
+	const xml = await raw(inflate(ctx.req));
+	console.log(222, xml)
+	const xml2json = fxp.parse(xml.toString());
+  console.log(111, xml2json)
 })
 
 
