@@ -62,7 +62,7 @@ router.post('/notify', async (ctx, next) => {
 	const xml = await raw(inflate(ctx.req));
 	const xml2json = fxp.parse(xml.toString());
 	if (xml2json.xml.result_code === 'SUCCESS') {
-	  updateOrderRecord({
+	  const res = await updateOrderRecord({
       result_code: 'SUCCESS',
       total_fee: xml2json.xml.total_fee,
       fee_type: xml2json.xml.fee_type,
@@ -73,6 +73,8 @@ router.post('/notify', async (ctx, next) => {
         out_trade_no: xml2json.xml.out_trade_no
       }
     })
+
+    console.log(444, res)
   }
   let json2Xml = function (json) {
     let _xml = '';
