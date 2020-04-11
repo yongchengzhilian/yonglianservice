@@ -4,7 +4,8 @@
  */
 
 const APP_ID = {
-  NING_BO: 'wx938259363d663a46'
+  NING_BO: 'wx938259363d663a46',
+  DYH: ''
 }
 const APP_SECRET = {
   NING_BO: '593dfdbc4d9f2e1b14f61fa3f3a69fe3'
@@ -26,9 +27,18 @@ const getLoginUrl = function(code, city = 'NING_BO') {
     + code
 }
 
+const ORDER_TYPE = {
+  XCX: 1,
+  DYH: 2
+}
+
+const MCH_ID = '1556840741'
+
 module.exports = {
   APP_ID,
   APP_SECRET,
+  ORDER_TYPE,
+  MCH_ID,
   TEMPLATE_ID,
   getLoginUrl
 }

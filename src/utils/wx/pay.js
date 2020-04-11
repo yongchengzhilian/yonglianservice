@@ -9,12 +9,11 @@ const {
 const request = require('request')
 const crypto = require('crypto')
 const xml2js = require('xml2js')
-const appid = APP_ID.NING_BO
 const mch_id = '1556840741'
 const key = 'poiuytrewqasdfghjklmnbvcxz123456'
 const notify_url = 'https://www.qike.site/yongcheng/pay/notify'
 
-const pay = async ({openid,orderId,desc,totalPrice,spbill_create_ip})=> {
+const pay = async ({openid,orderId,desc,totalPrice,spbill_create_ip, appid})=> {
   // 通过查阅文档,调用统一下单有10个参数是必须的
   let obj = {
     appid,
@@ -43,7 +42,7 @@ const pay = async ({openid,orderId,desc,totalPrice,spbill_create_ip})=> {
     res = await wechatPay(obj);
     let {prepay_id} = res;
     if(prepay_id){
-      res = getClientPayConfig(prepay_id)
+      res = getClientPayConfig(prepay_id, appid)
     }
     // console.log(res);
   }catch(e){
@@ -131,7 +130,7 @@ const get_nonce_str = (len)=>{
  * 生成前端调启支付界面的必要参数
  * @param {String} prepay_id
  */
-const getClientPayConfig = (prepay_id)=>{
+const getClientPayConfig = (prepay_id, appid)=>{
   let obj = {
       appId: appid,
       timeStamp: String(Math.floor(Date.now()/1000)),
