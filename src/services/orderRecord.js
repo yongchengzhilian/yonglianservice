@@ -31,7 +31,7 @@ const updateOrderRecord = async function (data, options) {
 
 const getUidByOrderId = async function(id) {
   const res = await OrderRecord.findOne({
-    attributes: ['uid'],
+    attributes: ['uid', 'total_fee'],
     where: {
       out_trade_no: id
     }

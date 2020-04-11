@@ -9,6 +9,7 @@ const {pay} = require('../../utils/wx/pay')
 const {getClientIP} = require('../../utils/utils')
 const raw = require('raw-body');
 const fxp = require("fast-xml-parser");
+const {RED_LINE_RECORD_TYPE} = require('../../enum/RedLine')
 const {
   createOrderRecord,
   getUserSuccessOrderCount,
@@ -67,27 +68,26 @@ router.post('/notify', async (ctx, next) => {
 	const xml = await raw(inflate(ctx.req));
 	const xml2json = fxp.parse(xml.toString());
 	if (xml2json.xml.result_code === 'SUCCESS') {
-	  const res = await updateOrderRecord({
-      result_code: 'SUCCESS',
-      total_fee: xml2json.xml.total_fee,
-      fee_type: xml2json.xml.fee_type,
-      bank_type: xml2json.xml.bank_type,
-      trade_type: xml2json.xml.trade_type,
-    }, {
-	    where: {
-        out_trade_no: xml2json.xml.out_trade_no
-      }
-    })
-    await uidRes = await getUidByOrderId(xml2json.xml.out_trade_no)
-    console.log(333, uidRes)
-    await updateRedLine(uidRes.dataValues.uid)
-    await addRedLineRecord({
-      uid: uidRes.dataValues.uid,
-      type: RED_LINE_RECORD_TYPE.BUY,
-      comment: '购买添加'
-    })
-
-    console.log(444, res)
+    const res = await getUidByOrderId(xml2json.xml.out_trade_no)
+    if (!res.dataValues.total_fee) {
+      await updateRedLine(res.dataValues.uid)
+      await addRedLineRecord({
+        uid: res.dataValues.uid,
+        type: RED_LINE_RECORD_TYPE.BUY,
+        comment: '购买添加'
+      })
+      await updateOrderRecord({
+        result_code: 'SUCCESS',
+        total_fee: xml2json.xml.total_fee,
+        fee_type: xml2json.xml.fee_type,
+        bank_type: xml2json.xml.bank_type,
+        trade_type: xml2json.xml.trade_type,
+      }, {
+        where: {
+          out_trade_no: xml2json.xml.out_trade_no
+        }
+      })
+    }
   }
   let json2Xml = function (json) {
     let _xml = '';
