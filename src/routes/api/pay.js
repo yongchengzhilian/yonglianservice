@@ -64,6 +64,12 @@ router.post('/order/xcx', async (ctx, next) => {
   ctx.body = new SuccessModel(res)
 })
 
+router.post('/orderNum', async (ctx, next) => {
+  const {uid} = ctx.request.body
+  const numRes = await getUserSuccessOrderCount(uid)
+  ctx.body = new SuccessModel(numRes)
+})
+
 router.post('/notify', async (ctx, next) => {
 	const xml = await raw(inflate(ctx.req));
 	const xml2json = fxp.parse(xml.toString());
