@@ -33,6 +33,25 @@ const inflate = require('inflation');
 
 router.prefix('/pay')
 
+let json2Xml = function (json) {
+  let _xml = '';
+  Object.keys(json).map((key) => {
+    _xml += `<${key}>${json[key]}</${key}>`
+  })
+  return `<xml>${_xml}</xml>`;
+}
+
+router.post('/token', async (ctx, next) => {
+  const returnData = {
+    ToUserName: ctx.request.body.ToUserName,
+    FromUserName: ctx.request.body.FromUserName,
+    CreateTime: ctx.request.body.CreateTime,
+    MsgType: 'text',
+    Content: `<a href="https://www.baidu.com">百度</a>`,
+  }
+  ctx.body = json2Xml(returnData)
+})
+
 router.post('/order/xcx', async (ctx, next) => {
   let now = new Date().getTime()
   const token = ctx.header.authorization
@@ -95,13 +114,7 @@ router.post('/notify', async (ctx, next) => {
       })
     }
   }
-  let json2Xml = function (json) {
-    let _xml = '';
-    Object.keys(json).map((key) => {
-      _xml += `<${key}>${json[key]}</${key}>`
-    })
-    return `<xml>${_xml}</xml>`;
-  }
+
   let sendData = {
     return_code: 'SUCCESS',
     return_msg: 'OK'
