@@ -49,7 +49,14 @@ router.post('/token', async (ctx, next) => {
     MsgType: 'text',
     Content: `<a href="https://www.baidu.com">百度</a>`,
   }
-  ctx.body = json2Xml(returnData)
+  const resMsg = '<xml>' +
+    '<ToUserName><![CDATA[' + ctx.request.body.ToUserName + ']]></ToUserName>' +
+    '<FromUserName><![CDATA[' + ctx.request.body.FromUserName + ']]></FromUserName>' +
+    '<CreateTime>' + ctx.request.body.CreateTime + '</CreateTime>' +
+    '<MsgType><![CDATA[text]]></MsgType>' +
+    '<Content><![CDATA[<a href="https://www.baidu.com">百度</a>]]></Content>' +
+    '</xml>';
+  ctx.body = json2Xml(resMsg)
 })
 
 router.post('/order/xcx', async (ctx, next) => {
