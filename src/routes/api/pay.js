@@ -12,10 +12,15 @@ const fxp = require("fast-xml-parser");
 const {
   createOrderRecord,
   getUserSuccessOrderCount,
+  getUidByOrderId,
   updateOrderRecord
 } = require('../../services/orderRecord')
 const {
-  getUserInfoByUidFromTable
+  addRedLineRecord
+} = require('../../services/redLine')
+const {
+  getUserInfoByUidFromTable,
+  updateRedLine
 } = require('../../services/user')
 const parseToken = require('../../utils/parseToken')
 const {
@@ -72,6 +77,14 @@ router.post('/notify', async (ctx, next) => {
 	    where: {
         out_trade_no: xml2json.xml.out_trade_no
       }
+    })
+    await uidRes = await getUidByOrderId(xml2json.xml.out_trade_no)
+    console.log(333, uidRes)
+    await updateRedLine(uidRes.dataValues.uid)
+    await addRedLineRecord({
+      uid: uidRes.dataValues.uid,
+      type: RED_LINE_RECORD_TYPE.BUY,
+      comment: '购买添加'
     })
 
     console.log(444, res)

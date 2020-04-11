@@ -29,8 +29,19 @@ const updateOrderRecord = async function (data, options) {
   return res
 }
 
+const getUidByOrderId = async function(id) {
+  const res = await OrderRecord.findOne({
+    attributes: ['uid'],
+    where: {
+      out_trade_no: id
+    }
+  })
+  return res
+}
+
 module.exports = {
   createOrderRecord,
   updateOrderRecord,
+  getUidByOrderId,
   getUserSuccessOrderCount
 }
