@@ -63,6 +63,7 @@ const userLikeHandle = async function() {
 }
 
 refreshWxAccessToken()
+console.log(global.access_token)
 
 const interval = setInterval(async function () {
   try {

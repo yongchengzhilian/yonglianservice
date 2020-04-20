@@ -8,6 +8,7 @@ const {SuccessModel} = require('../../model/ResModel')
 const {pay} = require('../../utils/wx/pay')
 const {getClientIP} = require('../../utils/utils')
 const raw = require('raw-body');
+const axios = require('axios')
 const fxp = require("fast-xml-parser");
 const {RED_LINE_RECORD_TYPE} = require('../../enum/RedLine')
 const {
@@ -41,24 +42,16 @@ let json2Xml = function (json) {
   return `<xml>${_xml}</xml>`;
 }
 
-router.post('/token', async (ctx, next) => {
-  console.log(1111)
-  const returnData = {
-    ToUserName: ctx.request.body.ToUserName,
-    FromUserName: ctx.request.body.FromUserName,
-    CreateTime: ctx.request.body.CreateTime,
-    MsgType: 'text',
-    Content: `<a href="https://www.baidu.com">百度</a>`,
-  }
-  const resMsg = '<xml>' +
-    '<ToUserName><![CDATA[' + ctx.request.body.ToUserName + ']]></ToUserName>' +
-    '<FromUserName><![CDATA[' + ctx.request.body.FromUserName + ']]></FromUserName>' +
-    '<CreateTime>' + ctx.request.body.CreateTime + '</CreateTime>' +
-    '<MsgType><![CDATA[text]]></MsgType>' +
-    '<Content><![CDATA[<a href="https://www.baidu.com">百度</a>]]></Content>' +
-    '</xml>';
-  ctx.body = resMsg
+router.all('/token', async (ctx, next) => {
+  axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
+    access_token,
+    touser: ctx.request.body.FromUserName,
+    msgtype: 'text',
+    text: { "content":"<a href='https://www.baidu.com'>百度</a>"}
+  })
+  ctx.body = 'success'
 })
+
 
 router.post('/order/xcx', async (ctx, next) => {
   let now = new Date().getTime()
@@ -98,9 +91,9 @@ router.post('/orderNum', async (ctx, next) => {
 })
 
 router.post('/notify', async (ctx, next) => {
-	const xml = await raw(inflate(ctx.req));
-	const xml2json = fxp.parse(xml.toString());
-	if (xml2json.xml.result_code === 'SUCCESS') {
+  const xml = await raw(inflate(ctx.req));
+  const xml2json = fxp.parse(xml.toString());
+  if (xml2json.xml.result_code === 'SUCCESS') {
     const res = await getUidByOrderId(xml2json.xml.out_trade_no)
     if (!res.dataValues.total_fee) {
       await updateRedLine(res.dataValues.uid)
