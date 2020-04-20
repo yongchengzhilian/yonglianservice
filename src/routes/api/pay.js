@@ -42,6 +42,7 @@ let json2Xml = function (json) {
 }
 
 router.post('/token', async (ctx, next) => {
+  console.log(1111)
   const returnData = {
     ToUserName: ctx.request.body.ToUserName,
     FromUserName: ctx.request.body.FromUserName,
@@ -56,7 +57,7 @@ router.post('/token', async (ctx, next) => {
     '<MsgType><![CDATA[text]]></MsgType>' +
     '<Content><![CDATA[<a href="https://www.baidu.com">百度</a>]]></Content>' +
     '</xml>';
-  ctx.body = json2Xml(resMsg)
+  ctx.body = resMsg
 })
 
 router.post('/order/xcx', async (ctx, next) => {
