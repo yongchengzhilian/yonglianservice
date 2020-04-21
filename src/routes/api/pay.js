@@ -46,9 +46,16 @@ router.all('/token', async (ctx, next) => {
   axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
     access_token,
     touser: ctx.request.body.FromUserName,
-    msgtype: 'text',
+    msgtype: 'image',
+    image: {media_id: 'NkBbw354dBVrfAmn_ypLfxOEak3s9fmr-scQkFA5PtORRcwdkwF-csXz9VEa_qWB'},
     text: { "content":"<a href='https://www.baidu.com'>百度</a>"}
-  })
+  }).then(res => {console.log(222, res.data)})
+  // axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
+  //   access_token,
+  //   touser: ctx.request.body.FromUserName,
+  //   msgtype: 'text',
+  //   text: { "content":"<a href='https://www.baidu.com'>百度</a>"}
+  // })
   ctx.body = 'success'
 })
 
@@ -122,6 +129,5 @@ router.post('/notify', async (ctx, next) => {
   }
   ctx.body = json2Xml(sendData)
 })
-
 
 module.exports = router

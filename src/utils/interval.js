@@ -26,6 +26,10 @@ const {
   addRedLineRecord
 } = require('../services/redLine')
 
+const {
+  uploadTempMedia
+} = require('./uploadTempMedia')
+
 const userLikeHandle = async function() {
   const userLikeList = await getUserLikeList()
   for (let i = 0; i < userLikeList.length; i++) {
@@ -63,7 +67,7 @@ const userLikeHandle = async function() {
 }
 
 refreshWxAccessToken()
-console.log(global.access_token)
+uploadTempMedia()
 
 const interval = setInterval(async function () {
   try {
@@ -77,6 +81,10 @@ const interval = setInterval(async function () {
 
   }
 }, ONE_HOURS_INTERVAL)
+
+setInterval(async function () {
+  uploadTempMedia()
+}, 1000 * 60 * 60 *24 * 2)
 
 module.exports = {
   userLikeInterval: interval
