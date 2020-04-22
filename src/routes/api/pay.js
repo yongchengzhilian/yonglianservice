@@ -44,9 +44,9 @@ let json2Xml = function (json) {
 }
 
 router.all('/oauth', async (ctx, next) => {
-  console.log('code', ctx.params)
+  console.log('code', ctx.query)
   console.log('code', ctx.request.body)
-  const {code} = ctx.params
+  const {code} = ctx.query
   const data = await axios.get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${APP_ID.FWH}&secret=${APP_SECRET.FWH}&code=${code}&grant_type=authorization_code`)
   console.log('data', data.data)
 
