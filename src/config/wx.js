@@ -10,7 +10,7 @@ const APP_ID = {
 }
 const APP_SECRET = {
   NING_BO: '593dfdbc4d9f2e1b14f61fa3f3a69fe3',
-  FWH: '1fab3b5adc921e73d3cde94ac1796cca'
+  FWH: 'd035a14cdd00fbb8e0d2ba3e67082def'
 }
 
 const TEMPLATE_ID = {

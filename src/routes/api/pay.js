@@ -22,6 +22,7 @@ const {
 } = require('../../services/redLine')
 const {
   getUserInfoByUidFromTable,
+  getUserInfoByUnionid,
   updateRedLine
 } = require('../../services/user')
 const parseToken = require('../../utils/parseToken')
@@ -49,8 +50,16 @@ router.all('/oauth', async (ctx, next) => {
   const {code} = ctx.query
   const data = await axios.get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${APP_ID.FWH}&secret=${APP_SECRET.FWH}&code=${code}&grant_type=authorization_code`)
   console.log('data', data.data)
-
-  ctx.response.redirect('https://www.qike.site');
+  const {unionid} = data.data
+  const res = await getUserInfoByUnionid(unionid)
+  const {
+    id,
+    nickname,
+    avatar,
+    red_line_count
+  } = res.dataValues
+  const params = `id=${id}&name=${nickname}&avatar=${avatar}&count=${red_line_count}`
+  ctx.response.redirect(`https://www.qike.site/index.html?${params}`);
 })
 
 router.all('/token', async (ctx, next) => {
@@ -74,8 +83,13 @@ router.all('/token', async (ctx, next) => {
 
 router.post('/order/xcx', async (ctx, next) => {
   let now = new Date().getTime()
-  const token = ctx.header.authorization
-  const {id} = await parseToken(token)
+  let id = ctx.request.body.id
+  if (!id) {
+    const token = ctx.header.authorization
+    const tokendata = await parseToken(token)
+    id = tokendata.id
+  }
+
   const {open_id} = await getUserInfoByUidFromTable(id)
   const orderId = `AI_DOU_XCX_ORDER_ID${now}`
   const numRes = await getUserSuccessOrderCount(id)
@@ -104,7 +118,13 @@ router.post('/order/xcx', async (ctx, next) => {
 })
 
 router.post('/orderNum', async (ctx, next) => {
-  const {uid} = ctx.request.body
+  // const {uid} = ctx.request.body
+  let uid = ctx.request.body.uid
+  if (!uid) {
+    const token = ctx.header.authorization
+    const tokendata = await parseToken(token)
+    uid = tokendata.id
+  }
   const numRes = await getUserSuccessOrderCount(uid)
   ctx.body = new SuccessModel(numRes)
 })
