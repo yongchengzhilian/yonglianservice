@@ -59,7 +59,7 @@ router.all('/oauth', async (ctx, next) => {
     red_line_count
   } = res.dataValues
   const params = `id=${id}&name=${nickname}&avatar=${avatar}&count=${red_line_count}`
-  ctx.response.redirect(`https://www.qike.site/index.html?${params}`);
+  ctx.response.redirect(`https://www.qike.site?${params}`);
 })
 
 router.all('/token', async (ctx, next) => {
