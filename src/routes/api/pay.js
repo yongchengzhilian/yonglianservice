@@ -28,7 +28,8 @@ const parseToken = require('../../utils/parseToken')
 const {
   ORDER_TYPE,
   MCH_ID,
-  APP_ID
+  APP_ID,
+  APP_SECRET
 } = require('../../config/wx')
 const inflate = require('inflation');
 
@@ -42,14 +43,25 @@ let json2Xml = function (json) {
   return `<xml>${_xml}</xml>`;
 }
 
+router.all('/oauth', async (ctx, next) => {
+  console.log('code', ctx.params)
+  console.log('code', ctx.request.body)
+  const {code} = ctx.params
+  const data = await axios.get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${APP_ID.FWH}&secret=${APP_SECRET.FWH}&code=${code}&grant_type=authorization_code`)
+  console.log('data', data.data)
+
+  ctx.response.redirect('https://www.qike.site');
+})
+
 router.all('/token', async (ctx, next) => {
+  console.log(ctx.request.body)
   axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
     access_token,
     touser: ctx.request.body.FromUserName,
     msgtype: 'image',
     image: {media_id: 'NkBbw354dBVrfAmn_ypLfxOEak3s9fmr-scQkFA5PtORRcwdkwF-csXz9VEa_qWB'},
-    text: { "content":"<a href='https://www.baidu.com'>百度</a>"}
-  }).then(res => {console.log(222, res.data)})
+    // text: { "content":"<a href='https://www.baidu.com'>百度</a>"}
+  })
   // axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
   //   access_token,
   //   touser: ctx.request.body.FromUserName,
