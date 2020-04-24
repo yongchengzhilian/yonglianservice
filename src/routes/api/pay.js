@@ -59,7 +59,7 @@ router.all('/oauth', async (ctx, next) => {
     red_line_count
   } = res.dataValues
   const params = `id=${id}&name=${nickname}&avatar=${avatar}&count=${red_line_count}`
-  ctx.response.redirect(`https://www.qike.site?${params}`);
+  ctx.response.redirect(`https://www.qike.site/pay?${params}`);
 })
 
 router.all('/token', async (ctx, next) => {
@@ -69,21 +69,14 @@ router.all('/token', async (ctx, next) => {
     touser: ctx.request.body.FromUserName,
     msgtype: 'image',
     image: {media_id: 'NkBbw354dBVrfAmn_ypLfxOEak3s9fmr-scQkFA5PtORRcwdkwF-csXz9VEa_qWB'},
-    // text: { "content":"<a href='https://www.baidu.com'>百度</a>"}
   })
-  // axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
-  //   access_token,
-  //   touser: ctx.request.body.FromUserName,
-  //   msgtype: 'text',
-  //   text: { "content":"<a href='https://www.baidu.com'>百度</a>"}
-  // })
   ctx.body = 'success'
 })
 
 
 router.post('/order/xcx', async (ctx, next) => {
   let now = new Date().getTime()
-  let id = ctx.request.body.id
+  let id = ctx.request.body.uid
   if (!id) {
     const token = ctx.header.authorization
     const tokendata = await parseToken(token)
@@ -126,14 +119,19 @@ router.post('/orderNum', async (ctx, next) => {
     uid = tokendata.id
   }
   const numRes = await getUserSuccessOrderCount(uid)
-  ctx.body = new SuccessModel(numRes)
+  // console.log()
+  ctx.body = new SuccessModel({data: numRes})
 })
 
 router.post('/notify', async (ctx, next) => {
   const xml = await raw(inflate(ctx.req));
   const xml2json = fxp.parse(xml.toString());
+
   if (xml2json.xml.result_code === 'SUCCESS') {
     const res = await getUidByOrderId(xml2json.xml.out_trade_no)
+    // if (res.dataValues.result_code !== 'SUCCESS') {
+    //
+    // }
     if (!res.dataValues.total_fee) {
       await updateRedLine(res.dataValues.uid)
       await addRedLineRecord({

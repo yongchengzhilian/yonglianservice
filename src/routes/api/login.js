@@ -21,6 +21,11 @@ router.get('/getUserInfoByUid/:uid', async (ctx, next) => {
   ctx.body = new SuccessModel(userinfo)
 })
 
+router.get('/test', async (ctx, next) => {
+  console.log(111)
+  ctx.body = {h: 1}
+})
+
 router.post('/getUserinfo', async (ctx, next) => {
   const {
     iv,
