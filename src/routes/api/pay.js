@@ -64,12 +64,21 @@ router.all('/oauth', async (ctx, next) => {
 
 router.all('/token', async (ctx, next) => {
   console.log(ctx.request.body)
-  axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
-    access_token,
-    touser: ctx.request.body.FromUserName,
-    msgtype: 'image',
-    image: {media_id: 'NkBbw354dBVrfAmn_ypLfxOEak3s9fmr-scQkFA5PtORRcwdkwF-csXz9VEa_qWB'},
-  })
+  if (ctx.request.body.Content === '1' || !ctx.request.body.Content) {
+    axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
+      access_token,
+      touser: ctx.request.body.FromUserName,
+      msgtype: 'image',
+      image: {media_id: global.gzh_media_id},
+    })
+  } else {
+    axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
+      access_token,
+      touser: ctx.request.body.FromUserName,
+      msgtype: 'image',
+      image: {media_id: global.kf_media_id},
+    })
+  }
   ctx.body = 'success'
 })
 

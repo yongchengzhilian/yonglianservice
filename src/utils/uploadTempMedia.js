@@ -48,11 +48,18 @@ function _promiseRequest({ imgStram = null, imgBuffer = null }) {
 
 const uploadTempMedia = async function () {
 
-  const { data: imgStram } = await axios.get('https://www.qike.site/wl.png', {
+  const { data: gzhImgStram } = await axios.get('https://www.qike.site/xiaochengxu/image/yongchengzhilian.jpg', {
     responseType: 'stream',
   });
-  const data = await _promiseRequest({imgStram})
-  global.media_id = data.media_id
+  const gzh = await _promiseRequest({gzhImgStram})
+  global.gzh_media_id = gzh.media_id
+
+
+  const { data: kfImgStram } = await axios.get('https://www.qike.site/xiaochengxu/image/kf.jpg', {
+    responseType: 'stream',
+  });
+  const kf = await _promiseRequest({kfImgStram})
+  global.kf_media_id = kf.media_id
 }
 // uploadTempMedia()
 
