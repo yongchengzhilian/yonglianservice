@@ -32,11 +32,13 @@ const {
 
 const userLikeHandle = async function() {
   const userLikeList = await getUserLikeList()
+  console.log('=============>', userLikeList)
   for (let i = 0; i < userLikeList.length; i++) {
     let record = userLikeList[i].dataValues
     const createTime = new Date(record.createdAt).getTime()
     const now = new Date().getTime()
-    if (now - createTime > RED_LINE_BACK_TIME) {
+    console.log('=============>', now - createTime)
+    if (now - createTime > 1000) {
       await updateLikeRecord({type: LIKE_RECORD_TYPE.I_LIKE_FAIL_TIMEOUT}, {
         where: {
           id: record.id
@@ -54,8 +56,8 @@ const userLikeHandle = async function() {
         comment: '牵线超时自动返还'
       })
 
-      const res = getUserInfoByUidFromTable(record.uid)
-      subscribeMessage.applyResult({
+      const res = await getUserInfoByUidFromTable(record.uid)
+      await subscribeMessage.applyResult({
         openid: res.dataValues.open_id,
         data: {
           phrase1: '牵线失败',
@@ -69,6 +71,7 @@ const userLikeHandle = async function() {
 refreshWxAccessToken().then(res => {
   uploadTempMedia()
 })
+userLikeHandle()
 
 
 const interval = setInterval(async function () {
@@ -78,11 +81,14 @@ const interval = setInterval(async function () {
 
   }
   try {
+    // 后期需要改
+    // access_token 的有效期目前为 2 个小时，需定时刷新，重复获取将导致上次获取的 access_token 失效
     refreshWxAccessToken()
   } catch (e) {
 
   }
 }, ONE_HOURS_INTERVAL)
+
 
 setInterval(async function () {
   uploadTempMedia()
