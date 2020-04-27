@@ -63,8 +63,8 @@ const userLikeHandle = async function() {
       await subscribeMessage.applyResult({
         openid: res.dataValues.open_id,
         data: {
-          phrase1: '牵线失败',
-          thing2: '红线已返回,再看看其他有缘人吧'
+          phrase1: {value: '牵线失败'},
+          thing2: {value: '红线已返回,再看看其他有缘人吧'}
         }
       })
     }

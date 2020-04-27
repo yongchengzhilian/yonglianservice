@@ -266,8 +266,8 @@ const userRefuse = async function(data) {
     subscribeMessage.applyResult({
       openid: res.dataValues.open_id,
       data: {
-        phrase1: '牵线失败',
-        thing2: '红线已返回,再看看其他有缘人吧'
+        phrase1: {value: '牵线失败'},
+        thing2: {value: '红线已返回,再看看其他有缘人吧'}
       }
     })
   })
@@ -317,8 +317,8 @@ const userAgree = async function(data) {
     subscribeMessage.applyResult({
       openid: res.dataValues.open_id,
       data: {
-        phrase1: '牵线成功',
-        thing2: '快来查看您的有缘人'
+        phrase1: {value: '牵线成功'},
+        thing2: {value: '快来查看您的有缘人'}
       }
     })
   })
@@ -371,8 +371,8 @@ const userBreakUp = async function (data) {
     subscribeMessage.breakUp({
       openid: res.dataValues.open_id,
       data: {
-        phrase1: '匹配失败',
-        thing2: '再看看其他有缘人吧'
+        phrase1: {value: '匹配失败'},
+        thing2: {value: '再看看其他有缘人吧'}
       }
     })
   })
