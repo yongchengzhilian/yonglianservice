@@ -88,7 +88,7 @@ const interval = setInterval(async function () {
   } catch (e) {
 
   }
-}, ONE_HOURS_INTERVAL)
+}, 1000)
 
 
 setInterval(async function () {
