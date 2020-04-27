@@ -19,7 +19,8 @@ const {
 } = require('./wx/refreshAccessToken')
 
 const {
-  updateRedLine
+  updateRedLine,
+  getUserInfoByUidFromTable
 } = require('../services/user')
 
 const {
