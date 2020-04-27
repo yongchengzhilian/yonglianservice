@@ -18,11 +18,11 @@ class SubscribeMessage {
       data: data.data
     })
 
-    console.log(res.data)
+    console.log('===============>>>>>>>>', res.data)
   }
 
   async authMessage (data) {
-    this.send({
+    await this.send({
       data: data.data,
       openid: data.openid,
       template_id: TEMPLATE_ID.AUTH_RESULT
@@ -30,7 +30,7 @@ class SubscribeMessage {
   }
 
   async applyMessage (data) {
-    this.send({
+    await this.send({
       data: data.data,
       openid: data.openid,
       template_id: TEMPLATE_ID.APPLY
@@ -38,7 +38,7 @@ class SubscribeMessage {
   }
 
   async applyResult (data) {
-    this.send({
+    await this.send({
       data: data.data,
       openid: data.openid,
       template_id: TEMPLATE_ID.APPLY_RESULT

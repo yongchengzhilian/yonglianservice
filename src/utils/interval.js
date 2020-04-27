@@ -25,7 +25,7 @@ const {
 const {
   addRedLineRecord
 } = require('../services/redLine')
-
+const {subscribeMessage} = require('./wx/subscribeMessage')
 const {
   uploadTempMedia
 } = require('./uploadTempMedia')
@@ -57,6 +57,7 @@ const userLikeHandle = async function() {
       })
 
       const res = await getUserInfoByUidFromTable(record.uid)
+      // console.log()
       await subscribeMessage.applyResult({
         openid: res.dataValues.open_id,
         data: {
