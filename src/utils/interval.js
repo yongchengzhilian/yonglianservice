@@ -57,6 +57,7 @@ const userLikeHandle = async function() {
       })
 
       const res = await getUserInfoByUidFromTable(record.uid)
+      console.log('--------------', res.dataValues)
       // console.log()
       await subscribeMessage.applyResult({
         openid: res.dataValues.open_id,
