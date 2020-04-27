@@ -15,8 +15,9 @@ const {
 
 // 登入
 router.post('/ocridcard', async (ctx, next) => {
-  const {url} = ctx.request.body
-  let res = await axios.post(`https://api.weixin.qq.com/cv/ocr/idcard?type=MODE&img_url=${url}&access_token=${global.access_token}`, {
+  const {url, type} = ctx.request.body
+  let res = await axios.post(`https://api.weixin.qq.com/cv/ocr/idcard?type=${type}&img_url=${url}&access_token=${global.access_token}`, {
+    type,
     img_url: url,
     access_token: global.access_token
   })
