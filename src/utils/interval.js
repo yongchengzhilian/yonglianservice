@@ -66,8 +66,10 @@ const userLikeHandle = async function() {
   }
 }
 
-refreshWxAccessToken()
-uploadTempMedia()
+refreshWxAccessToken().then(res => {
+  uploadTempMedia()
+})
+
 
 const interval = setInterval(async function () {
   try {

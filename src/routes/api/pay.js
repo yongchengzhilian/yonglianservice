@@ -33,9 +33,7 @@ const {
   APP_SECRET
 } = require('../../config/wx')
 const inflate = require('inflation');
-
 router.prefix('/pay')
-
 let json2Xml = function (json) {
   let _xml = '';
   Object.keys(json).map((key) => {

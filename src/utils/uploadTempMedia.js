@@ -51,14 +51,14 @@ const uploadTempMedia = async function () {
   const { data: gzhImgStram } = await axios.get('https://www.qike.site/xiaochengxu/image/yongchengzhilian.jpg', {
     responseType: 'stream',
   });
-  const gzh = await _promiseRequest({gzhImgStram})
+  const gzh = await _promiseRequest({imgStram: gzhImgStram})
   global.gzh_media_id = gzh.media_id
 
 
   const { data: kfImgStram } = await axios.get('https://www.qike.site/xiaochengxu/image/kf.jpg', {
     responseType: 'stream',
   });
-  const kf = await _promiseRequest({kfImgStram})
+  const kf = await _promiseRequest({imgStram: kfImgStram})
   global.kf_media_id = kf.media_id
 }
 // uploadTempMedia()
