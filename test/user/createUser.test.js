@@ -21,6 +21,5 @@ test('修改用户成功', async () => {
   }, {
     where: { id: 1 }
   })
-  console.log(res, 222)
   expect(res[0]).toEqual(1);
 })

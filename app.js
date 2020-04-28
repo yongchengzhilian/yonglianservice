@@ -38,9 +38,16 @@ app.use(views(__dirname + '/src/views', {
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()
+  const request = {
+    params: ctx.params,
+    json: ctx.request.body
+  }
+  console.log(`开始请求-----------> ${ctx.method} ${ctx.url}`)
+  console.log(`请求参数-----------> ${JSON.stringify(request)}`)
   await next()
   const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+  console.log(`请求结束-----------> ${ctx.method} ${ctx.url} - ${ms}ms`)
+  console.log(`返回数据----------->`, JSON.stringify(ctx.body))
 })
 
 // routes
@@ -49,6 +56,6 @@ initRouters(app)
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
-});
+})
 
 module.exports = app

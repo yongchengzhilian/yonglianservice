@@ -3,8 +3,6 @@
  * @author zhaojianbo
  */
 const axios = require('axios')
-const fs = require('fs')
-const path = require('path')
 const request = require('request')
 function _promiseRequest({ imgStram = null, imgBuffer = null }) {
   const url = `https://api.weixin.qq.com/cgi-bin/media/upload?access_token=${global.access_token}&type=image`;
@@ -26,7 +24,7 @@ function _promiseRequest({ imgStram = null, imgBuffer = null }) {
 
           resolve(resData);
         } catch (e) {
-          console.log(e)
+          // console.log(e)
         }
       },
     );
@@ -52,6 +50,7 @@ const uploadTempMedia = async function () {
     responseType: 'stream',
   });
   const gzh = await _promiseRequest({imgStram: gzhImgStram})
+  console.log('公众号图片媒体资源上传------------>', JSON.stringify(gzh))
   global.gzh_media_id = gzh.media_id
 
 
@@ -59,6 +58,7 @@ const uploadTempMedia = async function () {
     responseType: 'stream',
   });
   const kf = await _promiseRequest({imgStram: kfImgStram})
+  console.log('客服图片媒体资源上传------------>', JSON.stringify(kf))
   global.kf_media_id = kf.media_id
 }
 // uploadTempMedia()

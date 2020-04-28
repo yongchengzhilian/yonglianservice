@@ -13,7 +13,6 @@ const post = function(url, form) {
       form,
     }, function (error, response, body) {
       if (error) {
-        console.log(11111, error)
         reject(error)
       } else {
         resolve(body)

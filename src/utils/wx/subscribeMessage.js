@@ -18,7 +18,11 @@ class SubscribeMessage {
       data: data.data
     })
 
-    console.log('===============>>>>>>>>', res.data)
+    // 日志打印
+    console.log('订阅消息微信请求结果', JSON.stringify({
+      request: data,
+      result: res.data
+    }))
   }
 
   async authMessage (data) {

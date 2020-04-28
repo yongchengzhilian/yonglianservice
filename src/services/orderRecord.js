@@ -19,8 +19,6 @@ const getUserSuccessOrderCount = async function(uid) {
     }
   })
 
-  console.log(res)
-
   return res
 }
 

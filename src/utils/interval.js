@@ -33,13 +33,11 @@ const {
 
 const userLikeHandle = async function() {
   const userLikeList = await getUserLikeList()
-  console.log('=============>', userLikeList)
   for (let i = 0; i < userLikeList.length; i++) {
     let record = userLikeList[i].dataValues
     const createTime = new Date(record.createdAt).getTime()
     const now = new Date().getTime()
-    console.log('=============>', now - createTime)
-    if (now - createTime > 1000) {
+    if (now - createTime > RED_LINE_BACK_TIME) {
       await updateLikeRecord({type: LIKE_RECORD_TYPE.I_LIKE_FAIL_TIMEOUT}, {
         where: {
           id: record.id
@@ -58,7 +56,6 @@ const userLikeHandle = async function() {
       })
 
       const res = await getUserInfoByUidFromTable(record.uid)
-      console.log('--------------', res.dataValues)
       // console.log()
       await subscribeMessage.applyResult({
         openid: res.dataValues.open_id,
@@ -90,7 +87,7 @@ const interval = setInterval(async function () {
   } catch (e) {
 
   }
-}, 1000)
+}, ONE_HOURS_INTERVAL)
 
 
 setInterval(async function () {

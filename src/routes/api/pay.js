@@ -43,11 +43,8 @@ let json2Xml = function (json) {
 }
 
 router.all('/oauth', async (ctx, next) => {
-  console.log('code', ctx.query)
-  console.log('code', ctx.request.body)
   const {code} = ctx.query
   const data = await axios.get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${APP_ID.FWH}&secret=${APP_SECRET.FWH}&code=${code}&grant_type=authorization_code`)
-  console.log('data', data.data)
   const {unionid} = data.data
   const res = await getUserInfoByUnionid(unionid)
   const {
@@ -61,16 +58,15 @@ router.all('/oauth', async (ctx, next) => {
 })
 
 router.all('/token', async (ctx, next) => {
-  console.log(ctx.request.body)
   if (ctx.request.body.Content === '1' || !ctx.request.body.Content) {
-    axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
+    await axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
       access_token,
       touser: ctx.request.body.FromUserName,
       msgtype: 'image',
       image: {media_id: global.gzh_media_id},
     })
   } else {
-    axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
+    await axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
       access_token,
       touser: ctx.request.body.FromUserName,
       msgtype: 'image',
