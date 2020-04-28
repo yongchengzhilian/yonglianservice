@@ -17,6 +17,7 @@ const refreshWxAccessToken = async function() {
       secret: APP_SECRET.NING_BO
     }
   })
+  console.log('获取accessToken----------------->', res.data)
   global.access_token = res.data.access_token
 }
 

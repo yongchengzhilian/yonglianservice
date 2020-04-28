@@ -20,7 +20,10 @@ class SubscribeMessage {
 
     // 日志打印
     console.log('订阅消息微信请求结果', JSON.stringify({
-      request: data,
+      request: {
+        ...data,
+        access_token: global.access_token,
+      },
       result: res.data
     }))
   }
