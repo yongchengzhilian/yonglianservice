@@ -9,7 +9,7 @@ const {
 } = require('../../config/wx')
 
 class SubscribeMessage {
-  async send (data) {
+  async send (data)   {
     const res = await axios.post(`https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=${global.access_token}`, {
       access_token: global.access_token,
       touser: data.openid,

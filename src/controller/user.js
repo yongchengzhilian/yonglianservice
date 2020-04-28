@@ -221,12 +221,13 @@ const addLike = async function(data) {
     })
   }
 
-  getUserInfoByUidFromTable(data.uid).then(res => {
+  getUserInfoByUidFromTable(data.uid).then(async res => {
+    const result = await getUserInfoByUidFromTable(data.id)
     subscribeMessage.applyMessage({
       openid: res.dataValues.open_id,
       data: {
         name1: {
-          value: res.dataValues.nickname,
+          value: result.dataValues.nickname,
         },
         date2: {
           value: getCurrentDate(),
