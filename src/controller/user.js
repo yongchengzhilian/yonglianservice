@@ -372,8 +372,8 @@ const userBreakUp = async function (data) {
     subscribeMessage.breakUp({
       openid: res.dataValues.open_id,
       data: {
-        phrase1: {value: '匹配失败'},
-        thing2: {value: '再看看其他有缘人吧'}
+        phrase2: {value: '匹配失败'},
+        thing3: {value: '再看看其他有缘人吧'}
       }
     })
   })
