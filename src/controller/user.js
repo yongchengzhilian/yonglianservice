@@ -238,6 +238,7 @@ const addLike = async function(data) {
 
 }
 
+
 const userRefuse = async function(data) {
   await updateLikeRecord({
     type: LIKE_RECORD_TYPE.I_LIKE_FAIL
@@ -262,7 +263,7 @@ const userRefuse = async function(data) {
     comment: '拒绝反还'
   })
 
-  getUserInfoByUidFromTable(data.uid).then(res => {
+  await getUserInfoByUidFromTable(data.uid).then(res => {
     subscribeMessage.applyResult({
       openid: res.dataValues.open_id,
       data: {
