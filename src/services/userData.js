@@ -15,7 +15,6 @@ const getUserList = async function(limit, page, gender, city = 'NING_BO') {
   const res = await User.findAll({
     limit,
     offset: limit * (page -1),
-    order: [['updatedAt', 'DESC']],
     include: {
       model: UserData,
       attributes: [
@@ -31,6 +30,7 @@ const getUserList = async function(limit, page, gender, city = 'NING_BO') {
         'education',
         'updatedAt'
       ],
+      order: [['updatedAt', 'DESC']],
     },
 
     where: {

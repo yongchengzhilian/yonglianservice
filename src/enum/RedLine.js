@@ -13,7 +13,11 @@ const RED_LINE_RECORD_TYPE = {
   LOVE: 7, // 牵线扣除
   OTHER: 8, // 其他
 }
+const RED_LINE_PRICE = 19.8
+const NEW_USER_COUNT_RATE = 0.5
 
 module.exports = {
-  RED_LINE_RECORD_TYPE
+  RED_LINE_RECORD_TYPE,
+  RED_LINE_PRICE,
+  NEW_USER_COUNT_RATE
 }

@@ -35,7 +35,7 @@ const userLikeHandle = async function() {
   const userLikeList = await getUserLikeList()
   for (let i = 0; i < userLikeList.length; i++) {
     let record = userLikeList[i].dataValues
-    const createTime = new Date(record.createdAt).getTime()
+    const createTime = new Date(record.updatedAt).getTime()
     const now = new Date().getTime()
     if (now - createTime > RED_LINE_BACK_TIME) {
       await updateLikeRecord({type: LIKE_RECORD_TYPE.I_LIKE_FAIL_TIMEOUT}, {

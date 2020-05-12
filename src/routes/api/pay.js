@@ -10,7 +10,11 @@ const {getClientIP} = require('../../utils/utils')
 const raw = require('raw-body');
 const axios = require('axios')
 const fxp = require("fast-xml-parser");
-const {RED_LINE_RECORD_TYPE} = require('../../enum/RedLine')
+const {
+  RED_LINE_RECORD_TYPE,
+  RED_LINE_PRICE,
+  NEW_USER_COUNT_RATE
+} = require('../../enum/RedLine')
 const {
   createOrderRecord,
   getUserSuccessOrderCount,
@@ -89,9 +93,9 @@ router.post('/order/xcx', async (ctx, next) => {
   const {open_id} = await getUserInfoByUidFromTable(id)
   const orderId = `AI_DOU_XCX_ORDER_ID${now}`
   const numRes = await getUserSuccessOrderCount(id)
-  let price = 0.01
-  if (numRes > 2) {
-    price = 0.02
+  let price = RED_LINE_PRICE
+  if (numRes < 3) {
+    price = RED_LINE_PRICE * NEW_USER_COUNT_RATE
   }
   const res = await pay({
     appid: APP_ID.NING_BO,

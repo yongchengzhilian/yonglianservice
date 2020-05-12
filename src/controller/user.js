@@ -276,6 +276,10 @@ const userRefuse = async function(data) {
 }
 
 const userAgree = async function(data) {
+  const userInfo = await getUserInfoByUidFromTable(data.uid)
+  if (userInfo.dataValues.liking_id) {
+    throw new global.HttpException('对方正在前线中')
+  }
   await updateUser({
     status: USER_STATUS.LOVING,
     liking_id: data.uid
