@@ -30,8 +30,8 @@ const getUserList = async function(limit, page, gender, city = 'NING_BO') {
         'education',
         'updatedAt'
       ],
-      order: [['updatedAt', 'DESC']],
     },
+    order: [['updatedAt', 'DESC']],
 
     where: {
       gender,
