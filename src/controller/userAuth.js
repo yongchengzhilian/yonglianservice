@@ -21,6 +21,7 @@ const {AUTH_TYPE, USER_STATUS} = require('../enum/User')
 
 const getAuthList = async function () {
   const res = await getAuthListService()
+  console.log('listService', res)
   // if () {}
   const list = res.map(item => {
     const dataValues = item.dataValues
