@@ -4,6 +4,7 @@
 const router = require('koa-router')()
 const {SuccessModel} = require('../../model/ResModel')
 const parseToken = require('../../utils/parseToken')
+const {getInviteList} = require('../../controller/invite')
 
 router.prefix('/invite')
 
