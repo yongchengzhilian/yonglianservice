@@ -9,7 +9,7 @@ const catchError = async (ctx, next) => {
   try {
     await next()
   } catch (e) {
-    console.error('全局错误监听--------------> ', JSON.stringify(e))
+    console.error('全局错误监听--------------> ', e)
     if (e instanceof HttpException) {
       ctx.body = new ErrorModel({
         errno: e.errcode,
