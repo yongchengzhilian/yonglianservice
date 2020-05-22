@@ -145,7 +145,15 @@ const saveUserData = async function(data) {
     work: data.work
   }
   await updateUser({status, wechat, phone}, {where: {id: data.id}})
-  await updateUserAuthData(userinfo, {where: {uid: data.id}})
+  try {
+    await updateUserAuthData(userinfo, {where: {uid: data.id}})
+  } catch (e) {
+    await createUserAuthData({
+      ...userinfo,
+      uid: data.id
+    })
+    console.error(JSON.stringify(e))
+  }
 }
 
 const getSelfInfo = async function(id) {

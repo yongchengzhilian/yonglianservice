@@ -26,6 +26,7 @@ class SubscribeMessage {
       },
       result: res.data
     }))
+    console.log('消息订阅发送的access_token', global.access_token)
   }
 
   async authMessage (data) {

@@ -20,6 +20,9 @@ const generateToken = function(userinfo) {
   return token
 }
 
+/**
+ * @description 微信登入 获取用户信息
+ * */
 const getUserinfo = async function (iv, encryptedData, code, inviteId) {
   // 先获取用户unionid
   const wxRes = await wxLogin(code)

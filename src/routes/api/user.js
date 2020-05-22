@@ -37,6 +37,7 @@ router.prefix('/user')
  * 获取用户信息
  * @param ${uid}
  * */
+// todo 这个接口调用频繁, 后需要从redis获取
 router.get('/getCenterData', async (ctx, next) => {
   const token = ctx.header.authorization
   const {id} = await parseToken(token)
@@ -48,6 +49,7 @@ router.get('/getCenterData', async (ctx, next) => {
  * 获取用户列表
  * @param ${limit, page}
  * */
+// todo 列表排序目前还有问题
 router.post('/list', async (ctx, next) => {
   const {limit, page} = ctx.request.body
   const token = ctx.header.authorization

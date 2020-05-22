@@ -94,7 +94,6 @@ const getAuthListService = async function() {
     attributes: [
       'nickname',
       'gender',
-      // 'open_id',
       'wechat',
       'avatar',
       'phone',
@@ -293,7 +292,11 @@ const createUser = async function(data, inviteId, city = 'NING_BO') {
     // 如果邀请每5个人 送邀请人一条红线
     if (inviteList.count !== 0 && inviteList.count % 5 === 0) {
       await updateRedLine(inviteId)
-      await addRedLineRecord(RED_LINE_RECORD_TYPE.INVITE, '邀请赠送', inviteId)
+      await addRedLineRecord({
+        uid: inviteId,
+        type: RED_LINE_RECORD_TYPE.INVITE,
+        comment: '邀请赠送'
+      })
     }
   }
 

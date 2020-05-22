@@ -25,6 +25,8 @@ router.get('/getQiniuToken', async (ctx, next) => {
   ctx.body = new SuccessModel({token})
 })
 
+
+// todo 七牛云图片自动删除 待开发
 router.post('/delQiniuImage', async (ctx, next) => {
   const {key} = ctx.request.body
   let mac = new qiniu.auth.digest.Mac(ACCESS_KEY, SECRET_KEY)

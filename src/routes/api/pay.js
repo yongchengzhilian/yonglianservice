@@ -31,13 +31,14 @@ const {
 } = require('../../services/user')
 const parseToken = require('../../utils/parseToken')
 const {
-  ORDER_TYPE,
   MCH_ID,
   APP_ID,
   APP_SECRET
 } = require('../../config/wx')
 const inflate = require('inflation');
+
 router.prefix('/pay')
+
 let json2Xml = function (json) {
   let _xml = '';
   Object.keys(json).map((key) => {
@@ -46,9 +47,13 @@ let json2Xml = function (json) {
   return `<xml>${_xml}</xml>`;
 }
 
+/**
+ * @description 微信公众号授权回调
+ * */
 router.all('/oauth', async (ctx, next) => {
+  const url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='
   const {code} = ctx.query
-  const data = await axios.get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${APP_ID.FWH}&secret=${APP_SECRET.FWH}&code=${code}&grant_type=authorization_code`)
+  const data = await axios.get(`${url}${APP_ID.FWH}&secret=${APP_SECRET.FWH}&code=${code}&grant_type=authorization_code`)
   const {unionid} = data.data
   const res = await getUserInfoByUnionid(unionid)
   const {
@@ -61,26 +66,35 @@ router.all('/oauth', async (ctx, next) => {
   ctx.response.redirect(`https://www.qike.site/pay?${params}`);
 })
 
+/**
+ * @description 微信客服消息回调
+ * */
 router.all('/token', async (ctx, next) => {
+  const url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='
   if (ctx.request.body.Content === '1' || !ctx.request.body.Content) {
-    await axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
+    await axios.post(`${url}${global.access_token}`, {
       access_token,
       touser: ctx.request.body.FromUserName,
       msgtype: 'image',
       image: {media_id: global.gzh_media_id},
     })
   } else {
-    await axios.post('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='+global.access_token, {
+    await axios.post(`${url}${global.access_token}`, {
       access_token,
       touser: ctx.request.body.FromUserName,
       msgtype: 'image',
       image: {media_id: global.kf_media_id},
     })
   }
+  console.log('客服消息回调成功=============>')
   ctx.body = 'success'
 })
 
 
+/**
+ * @description 小程序下单
+ * @param {uid} 如果是小程序下单， uid从token中获取
+ * */
 router.post('/order/xcx', async (ctx, next) => {
   let now = new Date().getTime()
   let id = ctx.request.body.uid
@@ -101,7 +115,7 @@ router.post('/order/xcx', async (ctx, next) => {
     appid: APP_ID.NING_BO,
     orderId,
     openid: open_id,
-    desc: '测试',
+    desc: '甬城红线',
     totalPrice: price,
     spbill_create_ip: getClientIP(ctx.req)
   })
@@ -117,8 +131,12 @@ router.post('/order/xcx', async (ctx, next) => {
   ctx.body = new SuccessModel(res)
 })
 
+
+/**
+ *  @description 获取订单数量， 小程序端 不需要传参， 直接从token获取id
+ *  @params {uid} 小程序端 直接从token中获取
+ * */
 router.post('/orderNum', async (ctx, next) => {
-  // const {uid} = ctx.request.body
   let uid = ctx.request.body.uid
   if (!uid) {
     const token = ctx.header.authorization
@@ -126,19 +144,18 @@ router.post('/orderNum', async (ctx, next) => {
     uid = tokendata.id
   }
   const numRes = await getUserSuccessOrderCount(uid)
-  // console.log()
   ctx.body = new SuccessModel({data: numRes})
 })
 
+
+/**
+ * @description 支付回调地址， 需要判断是否支付成功 还需判断是否已提交入库
+ * */
 router.post('/notify', async (ctx, next) => {
   const xml = await raw(inflate(ctx.req));
   const xml2json = fxp.parse(xml.toString());
-
   if (xml2json.xml.result_code === 'SUCCESS') {
     const res = await getUidByOrderId(xml2json.xml.out_trade_no)
-    // if (res.dataValues.result_code !== 'SUCCESS') {
-    //
-    // }
     if (!res.dataValues.total_fee) {
       await updateRedLine(res.dataValues.uid)
       await addRedLineRecord({

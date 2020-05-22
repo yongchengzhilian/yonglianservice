@@ -58,10 +58,16 @@ const userAuth = async function(data) {
   await updateUser({status}, {where: {id: uid}})
   if (type === AUTH_TYPE.SUCCESS) {
     authResult = '通过'
-    authMsg = '若遇可疑人员， 可向客服举报'
+    authMsg = content || '若遇可疑人员， 可向客服举报'
     const userinfo = await getUserAuthData(uid)
     if (oldStatus === USER_STATUS.NEED_USER_DATA) {
-      createUserData(userinfo)
+      await createUserData(userinfo)
+      await updateRedLine(uid, 1)
+      await addRedLineRecord({
+        uid,
+        type: RED_LINE_RECORD_TYPE.OTHER,
+        comment: '资料提交赠送'
+      })
     } else {
       updateUserData(userinfo, {where: {uid}})
     }
