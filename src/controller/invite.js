@@ -7,7 +7,7 @@ const {
 } = require('../services/invite')
 
 const getInviteList = async function (id) {
-  const res = getInviteListService(id)
+  const res = await getInviteListService(id)
   console.error(res)
   const list = res.map(item => {
     return item.dataValues
