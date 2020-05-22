@@ -8,6 +8,7 @@ const {
 
 const getInviteList = async function (id) {
   const res = getInviteListService(id)
+  console.error(res)
   const list = res.map(item => {
     return item.dataValues
   })
