@@ -12,3 +12,5 @@ router.get('/list', async (ctx, next) => {
   const list = await getInviteList(id)
   ctx.body = new SuccessModel(list)
 })
+
+module.exports = router
