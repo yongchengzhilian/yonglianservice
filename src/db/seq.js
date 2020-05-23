@@ -10,7 +10,8 @@ const { isProd, isTest } = require('../utils/env')
 const { host, user, password, database } = MYSQL_CONF
 const conf = {
     host,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    logging: false
 }
 
 if (isTest) {
