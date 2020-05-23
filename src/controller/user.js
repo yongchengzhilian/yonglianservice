@@ -129,9 +129,15 @@ const saveUserData = async function(data) {
   if (data.status !== USER_STATUS.NEED_USER_DATA) {
     status = USER_STATUS.DATA_AUTHING_2
   }
+  const obj = {}
+  if (data.avatar) {
+    obj.avatar = data.avatar
+  }
+  if (data.nickname) {
+    obj.nickname = data.nickname
+  }
   const userinfo = {
-    nickname: data.nickname,
-    avatar: data.avatar,
+    ...obj,
     old_status: data.status,
     income: data.income,
     education: data.education,
@@ -150,8 +156,7 @@ const saveUserData = async function(data) {
     status,
     wechat,
     phone,
-    avatar: data.avatar,
-    nickname: data.nickname
+    ...obj
   }, {where: {id: data.id}})
   try {
     await updateUserAuthData(userinfo, {where: {uid: data.id}})
