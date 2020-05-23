@@ -30,6 +30,7 @@ const {genValidator} = require('../../middlewares/validator')
 const {nicknameValidate} = require('../../validator/user')
 const {SuccessModel} = require('../../model/ResModel')
 const parseToken = require('../../utils/parseToken')
+const {USER_STATUS} = require('../../enum/User')
 
 router.prefix('/user')
 
@@ -137,6 +138,9 @@ router.post('/saveUserData', async (ctx, next) => {
   const token = ctx.header.authorization
   const {id} = await parseToken(token)
   const {status} = await getUserInfoByUid(id)
+  if (status === USER_STATUS.DATA_AUTHING_1 || status === USER_STATUS.DATA_AUTHING_2) {
+    throw new global.HttpException('资料审核中')
+  }
   await saveUserData({
     id,
     status,
