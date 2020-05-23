@@ -52,7 +52,7 @@ const userAuth = async function(data) {
     auth_nickname: nickname
   })
   let status = oldStatus
-  if (type === AUTH_TYPE.SUCCESS && oldStatus === USER_STATUS.NEED_USER_DATA) {
+  if (type === AUTH_TYPE.SUCCESS && oldStatus !== USER_STATUS.LOVING) {
     status = USER_STATUS.SINGLE_USER
   }
   await updateUser({status}, {where: {id: uid}})

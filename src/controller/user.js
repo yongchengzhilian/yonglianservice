@@ -130,6 +130,8 @@ const saveUserData = async function(data) {
     status = USER_STATUS.DATA_AUTHING_2
   }
   const userinfo = {
+    nickname: data.nickname,
+    avatar: data.avatar,
     old_status: data.status,
     income: data.income,
     education: data.education,
@@ -144,7 +146,13 @@ const saveUserData = async function(data) {
     hobby: data.interest,
     work: data.work
   }
-  await updateUser({status, wechat, phone}, {where: {id: data.id}})
+  await updateUser({
+    status,
+    wechat,
+    phone,
+    avatar: data.avatar,
+    nickname: data.nickname
+  }, {where: {id: data.id}})
   try {
     await updateUserAuthData(userinfo, {where: {uid: data.id}})
   } catch (e) {
