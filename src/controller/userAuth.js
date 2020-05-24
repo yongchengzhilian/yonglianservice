@@ -24,9 +24,11 @@ const {subscribeMessage} = require('../utils/wx/subscribeMessage')
 
 const {
   AUTH_TYPE,
-  USER_STATUS,
-  RED_LINE_RECORD_TYPE
+  USER_STATUS
 } = require('../enum/User')
+const {
+  RED_LINE_RECORD_TYPE
+} = require('../enum/RedLine')
 
 
 const getAuthList = async function () {
