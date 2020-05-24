@@ -15,10 +15,10 @@ const UserAuthData = require('./UserAuthData')
 const OrderRecord = require('./OrderRecord')
 
 InviteRecord.belongsTo(User, {
-  foreignKey: 'invide_id',
+  foreignKey: 'invite_id',
 })
 User.hasMany(InviteRecord, {
-  foreignKey: 'invide_id'
+  foreignKey: 'invite_id'
 })
 
 OrderRecord.belongsTo(User, {

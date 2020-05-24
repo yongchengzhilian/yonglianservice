@@ -11,6 +11,12 @@ const {createUserData, updateUserData} = require('../services/userData')
 const {
   createAuthRecord
 } = require('../services/authRecord')
+const {
+  updateRedLine
+} = require('../services/user')
+const {
+  addRedLineRecord
+} = require('../services/redLine')
 const {getUserAuthData} = require('../services/userAuthData')
 const {timeFormat} = require('../utils/dt')
 

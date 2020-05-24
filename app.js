@@ -43,11 +43,11 @@ app.use(async (ctx, next) => {
     json: ctx.request.body
   }
   console.log(`开始请求-----------> ${ctx.method} ${ctx.url}`)
-  console.log(`请求参数-----------> ${JSON.stringify(request)}`)
+  console.log(`请求参数-----------> ${ctx.method} ${ctx.url} ${JSON.stringify(request)}`)
   await next()
   const ms = new Date() - start
   console.log(`请求结束-----------> ${ctx.method} ${ctx.url} - ${ms}ms`)
-  console.log(`返回数据----------->`, JSON.stringify(ctx.body))
+  console.log(`返回数据-----------> ${ctx.method} ${ctx.url}`, JSON.stringify(ctx.body))
 })
 
 // routes

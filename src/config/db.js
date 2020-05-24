@@ -11,12 +11,12 @@ let REDIS_CONF = {
 }
 
 let MYSQL_CONF = {
-  host: 'localhost',
+  host: '49.235.104.23',
   user: 'root',
   // password: 'root',
-  password: '123456',
+  password: 'aidou1818',
   port: '3306',
-  database: 'aidou_test',
+  database: 'yongcheng_liangyuan',
   logging: false
 }
 
