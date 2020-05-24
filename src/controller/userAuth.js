@@ -22,7 +22,11 @@ const {timeFormat} = require('../utils/dt')
 
 const {subscribeMessage} = require('../utils/wx/subscribeMessage')
 
-const {AUTH_TYPE, USER_STATUS} = require('../enum/User')
+const {
+  AUTH_TYPE,
+  USER_STATUS,
+  RED_LINE_RECORD_TYPE
+} = require('../enum/User')
 
 
 const getAuthList = async function () {
