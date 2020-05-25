@@ -70,7 +70,7 @@ const userAuth = async function(data) {
   await updateUser({status}, {where: {id: uid}})
   if (type === AUTH_TYPE.SUCCESS) {
     authResult = '通过'
-    authMsg = content || '若遇可疑人员， 可向客服举报'
+    authMsg = content || '遇见良缘, 预见幸福'
     const userinfo = await getUserAuthData(uid)
     if (oldStatus === USER_STATUS.NEED_USER_DATA) {
       await createUserData(userinfo)
