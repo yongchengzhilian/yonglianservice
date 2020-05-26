@@ -78,17 +78,14 @@ const interval = setInterval(async function () {
   try {
     userLikeHandle()
   } catch (e) {
-
-  }
-  try {
-    // 后期需要改
-    // access_token 的有效期目前为 2 个小时，需定时刷新，重复获取将导致上次获取的 access_token 失效
-    refreshWxAccessToken()
-  } catch (e) {
-
+    console.error(e)
   }
 }, ONE_HOURS_INTERVAL)
 
+// access_token 5分钟刷新一次
+setInterval(() => {
+  refreshWxAccessToken()
+}, 1000 * 60 * 4)
 
 setInterval(async function () {
   uploadTempMedia()
