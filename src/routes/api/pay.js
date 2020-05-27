@@ -70,6 +70,7 @@ router.all('/oauth', async (ctx, next) => {
  * @description 微信客服消息回调
  * */
 router.all('/token', async (ctx, next) => {
+  console.log('微信客服消息==========>', ctx.request.body.Content)
   const url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='
   if (ctx.request.body.Content === '1' || !ctx.request.body.Content) {
     await axios.post(`${url}${global.access_token}`, {
