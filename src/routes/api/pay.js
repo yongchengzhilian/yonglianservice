@@ -72,22 +72,23 @@ router.all('/oauth', async (ctx, next) => {
 router.all('/token', async (ctx, next) => {
   console.log('微信客服消息==========>', ctx.request.body.Content)
   const url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='
+  let res
   if (ctx.request.body.Content === '1' || !ctx.request.body.Content) {
-    await axios.post(`${url}${global.access_token}`, {
+    res = await axios.post(`${url}${global.access_token}`, {
       access_token,
       touser: ctx.request.body.FromUserName,
       msgtype: 'image',
       image: {media_id: global.gzh_media_id},
     })
   } else {
-    await axios.post(`${url}${global.access_token}`, {
+    res = await axios.post(`${url}${global.access_token}`, {
       access_token,
       touser: ctx.request.body.FromUserName,
       msgtype: 'image',
       image: {media_id: global.kf_media_id},
     })
   }
-  console.log('客服消息回调成功=============>')
+  console.log('客服消息回调成功=============>', res.data)
   ctx.body = 'success'
 })
 
