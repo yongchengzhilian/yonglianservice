@@ -34,7 +34,6 @@ const {
 const getAuthList = async function () {
   const res = await getAuthListService()
   console.log('listService', res)
-  // if () {}
   const list = res.map(item => {
     const dataValues = item.dataValues
     const authData = dataValues.user_auth_data[0].dataValues
