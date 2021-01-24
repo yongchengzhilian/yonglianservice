@@ -2,7 +2,7 @@
  * @description 用户相关请求
  * @author zhaojianbo
  */
-const {Op} = require('sequelize')
+  const {Op} = require('sequelize')
 const {
   User,
   UserData,

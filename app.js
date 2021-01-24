@@ -6,6 +6,7 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+
 const { initRouters } = require('./src/utils/initRouters')
 const catchError = require('./src/middlewares/exception/index')
 const HttpException = require('./src/middlewares/exception/http-exception')
@@ -21,7 +22,7 @@ app.use(jwtKoa({
   secret:SECRET
 }).unless({
   // 这些路由不需要校验jwt
-  path: [/^\/login/, /^\/auth/, /^\/pay/]
+  path: [/^\/login/, /^\/auth/, /^\/pay/, /^\/temp/]
 }))
 app.use(catchError)
 app.use(bodyparser({

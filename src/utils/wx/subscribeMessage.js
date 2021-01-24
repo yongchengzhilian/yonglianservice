@@ -16,7 +16,7 @@ class SubscribeMessage {
       template_id: data.template_id,
       page: 'pages/login/index/index',
       data: data.data
-    })
+    })  
 
     // 日志打印
     console.log('订阅消息微信请求结果', JSON.stringify({
